@@ -1,12 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
 
 using Steeltoe.Management.CloudFoundry;
+using Steeltoe.Management.Endpoint;
+using Steeltoe.Management.Hypermedia;
+
 using Steeltoe.Discovery.Client;
-namespace NadeeraKodithuwakku.Dietician.API
+namespace NadeeraKodithuwakku.Dietician.UserMgt
 {
     public class Startup
     {
@@ -24,7 +34,6 @@ namespace NadeeraKodithuwakku.Dietician.API
             services.AddDiscoveryClient(Configuration);
 
             services.AddControllers();
-            services.AddApiVersioning( options => options.ReportApiVersions = true );
         }
  
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
