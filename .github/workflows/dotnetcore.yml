@@ -14,6 +14,6 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Change Directory
-      run: cd src/NadeeraKodithuwakku.Dietician.API
+      run: cd ./src/NadeeraKodithuwakku.Dietician.API
     - name: Build with dotnet
       run: dotnet build --configuration Release
