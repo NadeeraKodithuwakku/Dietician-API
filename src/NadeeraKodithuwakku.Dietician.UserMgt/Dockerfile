@@ -8,4 +8,4 @@ RUN dotnet publish -c Release -o /app
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS final
 WORKDIR /app
 COPY --from=build /app .
-CMD  dotnet "NadeeraKodithuwakku.Dietician.UserMgt.dll"
+CMD ASPNETCORE_URLS=http://*:$PORT eureka__instance__port=$PORT  dotnet "NadeeraKodithuwakku.Dietician.UserMgt.dll"
