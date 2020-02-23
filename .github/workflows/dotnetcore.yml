@@ -19,11 +19,11 @@ jobs:
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
     - name: Build and deploy IDP
-        env: 
-          HEROKU_API_KEY: ${{ '64751ed7-369a-4b3c-aee1-2e65ad9f4c51' }}
-          APP_NAME: ${{ 'dietician-idp' }}
-        run: |
-          cd ./src/NadeeraKodithuwakku.Dietician.IDP
-          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+      env: 
+        HEROKU_API_KEY: ${{ '64751ed7-369a-4b3c-aee1-2e65ad9f4c51' }}
+        APP_NAME: ${{ 'dietician-idp' }}
+      run: |
+        cd ./src/NadeeraKodithuwakku.Dietician.IDP
+        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+        heroku container:push web -a $APP_NAME
+        heroku container:release web -a $APP_NAME
