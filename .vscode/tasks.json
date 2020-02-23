@@ -40,7 +40,7 @@
         },
         // user mgt
         {
-            "label": "build",
+            "label": "build:userMgt",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -52,7 +52,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish:userMgt",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -64,13 +64,88 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watch:userMgt",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "watch",
                 "run",
                 "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.UserMgt/NadeeraKodithuwakku.Dietician.UserMgt.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "build:admin",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.Admin/NadeeraKodithuwakku.Dietician.Admin.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish:admin",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.Admin/NadeeraKodithuwakku.Dietician.Admin.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch:admin",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.Admin/NadeeraKodithuwakku.Dietician.Admin.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build:idp",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.IDP/NadeeraKodithuwakku.Dietician.IDP.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish:idp",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.IDP/NadeeraKodithuwakku.Dietician.IDP.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch:idp",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.IDP/NadeeraKodithuwakku.Dietician.IDP.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

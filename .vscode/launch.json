@@ -29,10 +29,34 @@
             }
         },
         {
+            "name": "Admin",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build:admin",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.Admin/bin/Debug/netcoreapp3.1/NadeeraKodithuwakku.Dietician.Admin.dll",
+            "args": [
+                "eureka:instance:port=44368"
+            ],
+            "cwd": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.Admin",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"                
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": "User Mgt",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build:userMgt",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.UserMgt/bin/Debug/netcoreapp3.1/NadeeraKodithuwakku.Dietician.UserMgt.dll",
             "args": [
@@ -58,7 +82,7 @@
             "name": "User Mgt2",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build:userMgt",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.UserMgt/bin/Debug/netcoreapp3.1/NadeeraKodithuwakku.Dietician.UserMgt.dll",
             "args": [
@@ -75,6 +99,30 @@
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "ASPNETCORE_URLS": "http://localhost:5006",
                 "PORT": "5006"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "IDP",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build:idp",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.IDP/bin/Debug/netcoreapp3.1/NadeeraKodithuwakku.Dietician.IDP.dll",
+            "args": [
+                "eureka:instance:port=4438"
+            ],
+            "cwd": "${workspaceFolder}/src/NadeeraKodithuwakku.Dietician.IDP",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"                
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
