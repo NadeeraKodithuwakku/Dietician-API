@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+    architecture_web:
+        build:
+            context: .
+            dockerfile: dockerfile
+            args:
+                ANGULAR_ENVIRONMENT: production
+        environment:
+            - ConnectionStrings:Context=Server=architecture_mssqlserver;Database=Database;User Id=sa;Password=P4ss-W0rd!;
+        image: architecture_web
+        container_name: architecture_web
+        depends_on:
+            - architecture_mssqlserver
+        networks:
+            - network
+        ports:
+            - 8095:80
+    architecture_mssqlserver:
+        image: microsoft/mssql-server-linux
+        container_name: architecture_mssqlserver
+        environment:
+            ACCEPT_EULA: Y
+            SA_PASSWORD: P4ss-W0rd!
+        networks:
+            - network
+        ports:
+            - 1433:1433
+        volumes:
+            - mssql:/var/opt/mssql
+    # architecture_mongo:
+    #     image: mongo
+    #     container_name: architecture_mongo
+    #     environment:
+    #         MONGO_INITDB_DATABASE: db
+    #         MONGO_INITDB_ROOT_PASSWORD: P4ss-W0rd
+    #         MONGO_INITDB_ROOT_USERNAME: admin
+    #     networks:
+    #         - network
+    #     ports:
+    #         - 27017:27017
+    #     volumes:
+    #         - mongo:/data/db
+    # architecture_redis:
+    #     image: redis
+    #     container_name: architecture_redis
+    #     command: redis-server --requirepass P4ss-W0rd
+    #     networks:
+    #         - network
+    #     ports:
+    #         - 6379:6379
+    #     volumes:
+    #         - redis:/data
+
+networks:
+    network:
+
+volumes:
+    mssql:
+    # mongo:
+    # redis:
