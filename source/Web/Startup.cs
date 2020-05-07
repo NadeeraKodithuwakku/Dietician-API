@@ -16,7 +16,6 @@ public class Startup
             application.UseCorsAllowAny();
             application.UseHttps();
             application.UseRouting();
-            application.UseStaticFiles();
             application.UseResponseCompression();
             application.UseResponseCaching();
             application.UseAuthentication();
