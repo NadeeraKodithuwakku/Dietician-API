@@ -34,7 +34,8 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        docker build -f source/Web/Dockerfile -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
+        cd source/Web
+        docker build . -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
         docker push registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }} 
       
     - uses: azure/webapps-deploy@v2
