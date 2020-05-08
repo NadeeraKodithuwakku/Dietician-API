@@ -33,5 +33,5 @@ jobs:
         # Name of the Azure Web App
         app-name: DieticianWeb
         # Applies to Web App only: Publish profile (*.publishsettings) file contents with Web Deploy secrets
-        publish-profile: DieticianWeb.PublishSettings
+        publish-profile: ${{ secrets.AZURE_PROFILE }}
         configuration-file:  "source/Web/docker-compose.yml"
