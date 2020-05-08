@@ -49,7 +49,7 @@ jobs:
         node-version: 12.x
     - run: |
         cd source/Web/Frontend
-        npm ci
+        npm i
         npm run production
 
     - uses: lauchacarro/Azure-Storage-Action@master
