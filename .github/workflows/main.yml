@@ -42,9 +42,6 @@ jobs:
       with:
         folder: 'source/Web/Frontend/dist'
         connection-string: ${{ secrets.STORAGE_CONNECTION }}
-        public-access-policy: BlobContainer # BlobContainer | Blob | None
-        blob-container-name: 'angular'
-
 
 
     # Runs a single command using the runners shell

@@ -26,6 +26,9 @@
     "scripts": {
         "restore": "npm install --suppess-warnings --loglevel=error",
         "development": "ng lint && ng serve",
-        "production": "ng lint && ng build --configuration=production --base-href=/angular/ --deploy-url=/angular/"
-    }
+        "production": "ng lint && ng build --configuration=production"
+    },
+    "browserslist": [
+        "last 2 Chrome versions"
+    ]
 }
