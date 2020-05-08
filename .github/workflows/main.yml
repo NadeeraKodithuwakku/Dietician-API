@@ -27,7 +27,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Runs a single command using the runners shell
-     - uses: azure/docker-login@v1
+    - uses: azure/docker-login@v1
       with:
         login-server: registry20200507080840.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
