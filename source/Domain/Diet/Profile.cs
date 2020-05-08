@@ -18,6 +18,8 @@ namespace Dietician.Domain.Diet
             IsPregnant = isPregnant;
         }
 
+        public Profile(long id) : base(id) { }
+
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public string CreatedBy { get; set; }
@@ -25,9 +27,16 @@ namespace Dietician.Domain.Diet
 
         public int Age { get; }
         public Gender Gender { get; }
-        public decimal Weight { get; }
+        public decimal Weight { get; private set; }
         public decimal Height { get; }
         public bool IsVeg { get; }
         public bool IsPregnant { get; }
+
+        public User User { get; set; }
+
+        public void ChangeWeight(decimal weight)
+        {
+            Weight = weight;
+        }
     }
 }
