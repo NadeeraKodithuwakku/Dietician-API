@@ -34,11 +34,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '3.0.100'
-
-    - uses: lauchacarro/Azure-Storage-Action@master
+    - uses: tibor19/static-website-deploy@v1
       with:
         enabled-static-website: 'true'
         folder: 'source/Web/Frontend/dist'
