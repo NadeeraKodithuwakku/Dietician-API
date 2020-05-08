@@ -27,11 +27,17 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Runs a single command using the runners shell
-    - name: Azure WebApp
-      uses: Azure/webapps-deploy@v2
+     - uses: azure/docker-login@v1
       with:
-        # Name of the Azure Web App
-        app-name: DieticianWeb
-        # Applies to Web App only: Publish profile (*.publishsettings) file contents with Web Deploy secrets
-        publish-profile: ${{ secrets.AZURE_PROFILE }}
-        configuration-file:  "source/Web/docker-compose.yml"
+        login-server: registry20200507080840.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - run: |
+        docker build -f source/Web/Dockerfile -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
+        docker push registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }} 
+      
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'DieticianWeb'
+        images: 'registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}'
