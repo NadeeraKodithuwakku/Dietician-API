@@ -35,7 +35,7 @@ jobs:
     
     - run: |
         cd source
-        cp Web/Dockerfile DockerFile
+        cp Web/Dockerfile Dockerfile
         docker build . -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
         docker push registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }} 
       
