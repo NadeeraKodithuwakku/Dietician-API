@@ -6,3 +6,6 @@ insert_final_newline = true
 indent_size = 4
 indent_style = space
 trim_trailing_whitespace = true
+
+# IDE0060: Remove unused parameter
+dotnet_code_quality_unused_parameters = non_public:suggestion
