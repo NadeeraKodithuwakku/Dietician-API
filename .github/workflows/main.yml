@@ -50,7 +50,7 @@ jobs:
     - run: |
         cd source/Web/Frontend
         npm ci
-        npm run build:ci
+        npm run production
 
     - uses: lauchacarro/Azure-Storage-Action@master
       with:
