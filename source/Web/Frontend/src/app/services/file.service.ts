@@ -2,6 +2,7 @@ import { HttpClient, HttpEventType, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { FileUploadModel } from "../models/file/file.upload.model";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class AppFileService {
@@ -11,7 +12,7 @@ export class AppFileService {
         const formData = new FormData();
         formData.append(file.name, file);
 
-        const request = new HttpRequest("POST", "Files", formData, { reportProgress: true, });
+        const request = new HttpRequest("POST", environment.fileAPI, formData, { reportProgress: true, });
 
         return new Observable((observable: any) => {
             this.http.request(request).subscribe((event: any) => {

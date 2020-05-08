@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AppTokenService } from "../core/services/token.service";
 import { SignInModel } from "../models/auth/signIn.model";
 import { TokenModel } from "../models/auth/token.model";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class AppAuthService {
@@ -14,7 +15,7 @@ export class AppAuthService {
 
     signIn(model: SignInModel): void {
         this.http
-            .post<TokenModel>("Auths", model)
+            .post<TokenModel>(environment.authAPI, model)
             .subscribe((result) => {
                 if (!result || !result.token) { return; }
                 this.appTokenService.set(result.token);
