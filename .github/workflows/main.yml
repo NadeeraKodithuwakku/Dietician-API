@@ -22,9 +22,28 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: |
+        cd source/Web/Frontend
+        npm i
+        npm run production
+
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.100'
+
+    - uses: lauchacarro/Azure-Storage-Action@master
+      with:
+        enabled-static-website: 'true'
+        folder: 'source/Web/Frontend/dist'
+        connection-string: ${{ secrets.STORAGE_CONNECTION }}
+
 
     # Runs a single command using the runners shell
     - uses: azure/docker-login@v1
@@ -43,17 +62,3 @@ jobs:
       with:
         app-name: 'DieticianWeb'
         images: 'registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}'
-
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: |
-        cd source/Web/Frontend
-        npm i
-        npm run production
-
-    - uses: lauchacarro/Azure-Storage-Action@master
-      with:
-        enabled-static-website: 'true'
-        folder: 'source/Web/Frontend/dist'
-        connection-string: ${{ secrets.STORAGE_CONNECTION }}
