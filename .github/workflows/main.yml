@@ -40,7 +40,6 @@ jobs:
 
     - uses: lauchacarro/Azure-Storage-Action@master
       with:
-        enabled-static-website: 'true'
         folder: 'source/Web/Frontend/dist'
         connection-string: ${{ secrets.STORAGE_CONNECTION }}
 
