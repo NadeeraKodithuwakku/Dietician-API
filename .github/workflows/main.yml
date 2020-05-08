@@ -34,7 +34,8 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        cd source/Web
+        cd source
+        cp Web/Dockerfile DockerFile
         docker build . -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
         docker push registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }} 
       
