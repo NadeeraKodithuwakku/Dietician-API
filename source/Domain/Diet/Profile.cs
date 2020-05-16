@@ -37,6 +37,7 @@ namespace Dietician.Domain.Diet
         public void ChangeWeight(decimal weight)
         {
             Weight = weight;
+            DateModified = DateTime.Now;
         }
     }
 }

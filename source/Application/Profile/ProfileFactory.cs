@@ -10,7 +10,7 @@ namespace Dietician.Application
 {
     public static class ProfileFactory
     {
-        public static Profile CreateProfile(ProfileModel profile, User user)
+        public static Profile CreateProfile(ProfileModel profile)
         {
             var result = new Profile(
                 profile.Age,
@@ -20,6 +20,10 @@ namespace Dietician.Application
                 profile.IsVeg,
                 profile.IsPregnant)
             {
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                CreatedBy = "Admin",
+                ModifiedBy = "Admin",
             };
 
             return result;

@@ -7,12 +7,12 @@ namespace Dietician.Domain.Diet
 {
     public class Plan : Entity<long>, IAuditable
     {
-        public Plan(decimal target, string name, DateTime startDate, TimeSpan duration)
+        public Plan(decimal target, string name, int duration)
         {
             Target = target;
             Name = name;
-            StartDate = startDate;
             Duration = duration;
+            Status = Status.Inactive;
         }
 
         public DateTime DateCreated { get; set; }
@@ -22,13 +22,15 @@ namespace Dietician.Domain.Diet
 
         public decimal Target { get; }
         public string Name { get; }
-        public DateTime StartDate { get; }
-        public TimeSpan Duration { get; }
+        public DateTime? StartDate { get; private set; }
+        public int Duration { get; }
         public Status Status { get; private set; }
 
         public void Activate()
         {
             Status = Status.Active;
+            StartDate = DateTime.Now;
+            DateModified = DateTime.Now;
         }
 
         public void Inactivate()

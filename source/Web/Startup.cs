@@ -8,8 +8,8 @@ using System.Reflection;
 
 namespace Dietician.Web
 {
-public class Startup
-{
+    public class Startup
+    {
         public void Configure(IApplicationBuilder application)
         {
             application.UseException();

@@ -15,18 +15,15 @@ namespace Dietician.Application
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProfileRepository _profileRepository;
-        private readonly IUserRepository _userRepository;
 
         public ProfileService
             (
             IUnitOfWork unitOfWork,
-            IProfileRepository profileRepository,
-            IUserRepository userRepository
+            IProfileRepository profileRepository
             )
         {
             _unitOfWork = unitOfWork;
             _profileRepository = profileRepository;
-            _userRepository = userRepository;
         }
 
         public async Task<IResult<long>> AddAsync(ProfileModel model)
@@ -36,8 +33,7 @@ namespace Dietician.Application
             {
                 return Result<long>.Fail(validation.Message);
             }
-            var user = await _userRepository.GetAsync(model.UserId);
-            var profile = ProfileFactory.CreateProfile(model, user);
+            var profile = ProfileFactory.CreateProfile(model);
             await _profileRepository.AddAsync(profile);
             await _unitOfWork.SaveChangesAsync();
             return Result<long>.Success(profile.Id);
