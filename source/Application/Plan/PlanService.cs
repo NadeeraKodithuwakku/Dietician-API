@@ -83,7 +83,7 @@ namespace Dietician.Application
                 plan.Inactivate();
             }
 
-            await _repository.UpdateAsync(plan.Id, plan);
+            await _repository.UpdateStatusAsync(plan);
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();

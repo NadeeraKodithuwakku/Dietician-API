@@ -17,14 +17,23 @@ namespace Dietician.Domain.Diet
         }
 
         public string Name { get; }
-        public float Fat { get; }
-        public float Protine { get; }
-        public float Carbohydrate { get; }
-        public bool IsVeg { get; }
+        public float Fat { get; private set; }
+        public float Protine { get; private set; }
+        public float Carbohydrate { get; private set; }
+        public bool IsVeg { get; private set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
+
+        public void UpdateFood(float fat, float protine, float carbohydrate, bool isVeg)
+        {
+            Fat = fat;
+            Protine = protine;
+            Carbohydrate = carbohydrate;
+            IsVeg = isVeg;
+            DateModified = DateTime.Now;
+        }
     }
 }

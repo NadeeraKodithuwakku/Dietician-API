@@ -80,7 +80,7 @@ namespace Dietician.Application
 
             profile.ChangeWeight(model.Weight);
 
-            await _profileRepository.UpdateAsync(profile.Id, profile);
+            await _profileRepository.UpdateWeightAsync(profile);
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();

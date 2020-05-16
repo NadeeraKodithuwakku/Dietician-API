@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Dietician.Database
 {
-    public class PlanRepository : EFRepository<Plan>, IPlanRepository
+    public sealed class PlanRepository : EFRepository<Plan>, IPlanRepository
     {
         public PlanRepository(Context context) : base(context)
         {

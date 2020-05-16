@@ -31,6 +31,7 @@ namespace Dietician.Web
             services.AddFileExtensionContentTypeProvider();
             services.AddClassesInterfaces(typeof(IUserService).Assembly);
             services.AddClassesInterfaces(typeof(IUnitOfWork).Assembly);
+            services.AddTransient<IFoodRepository, FoodRespository>();
         }
 
         public static void AddSpa(this IServiceCollection services)
