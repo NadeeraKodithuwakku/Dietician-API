@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Dietician.Database
 {
-    public class ProgressRespository : EFRepository<Progress>, IProgressRepository
+    public sealed class ProgressRespository : EFRepository<Progress>, IProgressRepository
     {
         public ProgressRespository(Context context) : base(context)
         {
