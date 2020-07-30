@@ -8,17 +8,13 @@ using System.Text;
 
 namespace Dietician.Application
 {
-    public static class ProfileFactory
+    public static class ProgressFactory
     {
-        public static Profile CreateProfile(ProfileModel profile, User user)
+        public static Progress CreateProgress(ProgressModel progress, User user)
         {
-            var result = new Profile(
-                profile.Age,
-                (Gender)profile.Gender,
-                profile.Weight,
-                profile.Height,
-                profile.IsVeg,
-                profile.IsPregnant)
+            var result = new Progress(
+                progress.Weight,
+                progress.Date)
             {
                 DateCreated = DateTime.Now,
                 DateModified = DateTime.Now,

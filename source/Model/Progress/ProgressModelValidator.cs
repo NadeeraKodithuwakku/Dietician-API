@@ -5,6 +5,11 @@ namespace Dietician.Model
 {
     public class ProgressModelValidator : Validator<ProgressModel>
     {
+        public void RuleForId()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+
         public void RuleForUserId()
         {
             RuleFor(x => x.UserId).NotEmpty();
