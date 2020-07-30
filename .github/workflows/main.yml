@@ -38,10 +38,10 @@ jobs:
       with:
         dotnet-version: '3.0.100'
 
-    - uses: lauchacarro/Azure-Storage-Action@master
-      with:
-        folder: 'source/Web/Frontend/dist'
-        connection-string: ${{ secrets.STORAGE_CONNECTION }}
+    #- uses: lauchacarro/Azure-Storage-Action@master
+    #  with:
+    #   folder: 'source/Web/Frontend/dist'
+    #   connection-string: ${{ secrets.STORAGE_CONNECTION }}
 
 
     # Runs a single command using the runners shell
