@@ -21,6 +21,7 @@ namespace Dietician.Domain.Diet
         public float Protine { get; private set; }
         public float Carbohydrate { get; private set; }
         public bool IsVeg { get; private set; }
+        public int FoodCategory{ get; private set;}
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
