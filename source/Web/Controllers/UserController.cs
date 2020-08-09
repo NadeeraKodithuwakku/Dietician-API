@@ -2,6 +2,7 @@ using Dietician.Application;
 using Dietician.Model;
 using DotNetCore.AspNetCore;
 using DotNetCore.Objects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace Dietician.Web
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public Task<IActionResult> AddAsync(UserModel model)
         {
