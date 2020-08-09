@@ -9,7 +9,6 @@ namespace Dietician.Database
 {
     public static class PlanExpression
     {
-        public static Expression<Func<Plan, long>> UserId => plan => plan.User.Id;
         public static Expression<Func<Plan, PlanModel>> Model => plan => new PlanModel
         {
             Id = plan.Id,
@@ -22,6 +21,11 @@ namespace Dietician.Database
             Name = plan.Name,
             UserId = plan.UserId
         };
+
+        public static Expression<Func<Plan, bool>> UserId(long id)
+        {
+            return plan => plan.UserId == id;
+        }
 
         public static Expression<Func<Plan, bool>> Id(long id)
         {

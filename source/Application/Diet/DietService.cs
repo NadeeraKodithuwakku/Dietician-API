@@ -47,12 +47,12 @@ namespace Dietician.Application
                 throw new ArgumentException(validation.Message);
             }
 
-            var profile = await profileRepository.GetAsync(@params.UserId);
+            var profile = await profileRepository.GetByUserIdAync(@params.UserId);
             var plan = await planRepository.GetAsync(@params.PlanId);
             var foods = await foodRepository.ListAsync();
             var progress = await progressRepository.GetByUserIdAync(@params.UserId);
 
-            var bmrValue = GetBMRValue((double)profile.Weight, (double)profile.Height, profile.Age, profile.Gender);
+            var bmrValue = GetBMRValue((double)profile.Weight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
             var levelFactor = GetActivityLevelValue(plan.ActivityLevel);
             var totalEnergyExpenditure = bmrValue * levelFactor;
             var calorieIntakePerDay = totalEnergyExpenditure;
@@ -222,19 +222,19 @@ namespace Dietician.Application
             foreach (var food in foods)
             {
                 var foodCalorie = GetFoodCalorieAmount(food);
-                while (bFCal > 0 && bFCal > foodCalorie)//TODO: handle white and red rice
+                if (bFCal > 0 && bFCal > foodCalorie)//TODO: handle white and red rice
                 {
                     food.Type = DietType.Breakfast;
                     foodList.Add(food);
                     bFCal -= foodCalorie;
                 }
-                while (lCal > 0 && (lCal > foodCalorie || (food.Name.Contains("Rice (cooked)") && !foodList.Exists(x => x.Name == food.Name))))
+                if (lCal > 0 && lCal > foodCalorie && !foodList.Exists(x => x.Name == food.Name))
                 {
                     food.Type = DietType.Lunch;
                     foodList.Add(food);
                     lCal -= foodCalorie;
                 }
-                while (dCal > 0 && (dCal > foodCalorie || (food.Name.Contains("Rice (cooked)") && !foodList.Exists(x => x.Name == food.Name))))
+                if (dCal > 0 && dCal > foodCalorie && !foodList.Exists(x => x.Name == food.Name))
                 {
                     food.Type = DietType.Dinner;
                     foodList.Add(food);

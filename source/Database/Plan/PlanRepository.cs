@@ -22,9 +22,9 @@ namespace Dietician.Database
             return Queryable.Where(PlanExpression.Id(id)).Select(PlanExpression.Model).SingleOrDefaultAsync();
         }
 
-        public Task<long> GetByUserIdAync(long id)
+        public Task<PlanModel> GetByUserIdAync(long userId)
         {
-            return Queryable.Where(PlanExpression.Id(id)).Select(PlanExpression.UserId).SingleOrDefaultAsync();
+            return Queryable.Where(PlanExpression.UserId(userId)).Where(p => p.Status == Status.Active).Select(PlanExpression.Model).SingleOrDefaultAsync();
         }
 
         public Task UpdateStatusAsync(Plan plan)

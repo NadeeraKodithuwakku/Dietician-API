@@ -10,7 +10,7 @@ namespace Dietician.Database
 {
     public interface IPlanRepository : IRepository<Plan>
     {
-        Task<long> GetByUserIdAync(long id);
+        Task<PlanModel> GetByUserIdAync(long userId);
 
         Task<PlanModel> GetByIdAsync(long id);
 

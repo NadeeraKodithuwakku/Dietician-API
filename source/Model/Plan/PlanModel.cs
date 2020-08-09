@@ -15,7 +15,6 @@ namespace Dietician.Model
         public int Duration { get; set; }
         public DateTime StartDate { get; set; }
         public int Status { get; set; }
-
         public long UserId { get; set; }
     }
 }
