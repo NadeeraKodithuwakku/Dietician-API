@@ -10,8 +10,8 @@ namespace Dietician.Model
         {
             RuleForId();
             RuleForName();
-            RuleForDuration();
-            RuleForTarget();
+            //RuleForDuration();
+            //RuleForTarget();
         }
     }
 }

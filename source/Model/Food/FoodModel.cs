@@ -17,5 +17,7 @@ namespace Dietician.Model
         public float Carbohydrate { get; set; }
 
         public bool IsVeg { get; set; }
+
+        public DietType FoodType { get; set; }
     }
 }

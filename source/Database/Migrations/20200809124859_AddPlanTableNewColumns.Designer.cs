@@ -4,14 +4,16 @@ using Dietician.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dietician.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200809124859_AddPlanTableNewColumns")]
+    partial class AddPlanTableNewColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,6 +89,9 @@ namespace Dietician.Database.Migrations
                     b.Property<int>("FoodCategory")
                         .HasColumnType("int");
 
+                    b.Property<string>("FoodType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsVeg")
                         .HasColumnType("bit");
 
@@ -153,12 +158,7 @@ namespace Dietician.Database.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Plans","Plan");
                 });
@@ -197,7 +197,7 @@ namespace Dietician.Database.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Weight")
@@ -273,22 +273,11 @@ namespace Dietician.Database.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Dietician.Domain.Diet.Plan", b =>
-                {
-                    b.HasOne("Dietician.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Dietician.Domain.Diet.Profile", b =>
                 {
                     b.HasOne("Dietician.Domain.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Dietician.Domain.Diet.Progress", b =>

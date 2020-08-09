@@ -10,6 +10,8 @@ namespace Dietician.Database
 {
     public interface IPlanRepository : IRepository<Plan>
     {
+        Task<long> GetByUserIdAync(long id);
+
         Task<PlanModel> GetByIdAsync(long id);
 
         Task UpdateStatusAsync(Plan plan);

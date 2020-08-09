@@ -24,7 +24,7 @@ namespace Dietician.Application
                 DateModified = DateTime.Now,
                 CreatedBy = "Admin",
                 ModifiedBy = "Admin",
-                User = user
+                UserId = user.Id
             };
 
             return result;

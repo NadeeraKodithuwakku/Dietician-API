@@ -20,7 +20,8 @@ namespace Dietician.Database
             Weight = profile.Weight,
             Height = profile.Height,
             IsPregnant = profile.IsPregnant,
-            IsVeg = profile.IsVeg
+            IsVeg = profile.IsVeg,
+            UserId = profile.UserId
         };
 
         public static Expression<Func<Profile, bool>> Id(long id)

@@ -22,7 +22,7 @@ namespace Dietician.Web.Controllers
             _dietService = dietService;
         }
         [HttpGet]
-        public Task<IActionResult> ListAsync([FromQuery]DietParams parameters)
+        public Task<IActionResult> ListAsync([FromQuery] DietParams parameters)
         {
             return _dietService.GetDietAsyc(parameters).ResultAsync();
         }

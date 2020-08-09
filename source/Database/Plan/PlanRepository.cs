@@ -22,6 +22,11 @@ namespace Dietician.Database
             return Queryable.Where(PlanExpression.Id(id)).Select(PlanExpression.Model).SingleOrDefaultAsync();
         }
 
+        public Task<long> GetByUserIdAync(long id)
+        {
+            return Queryable.Where(PlanExpression.Id(id)).Select(PlanExpression.UserId).SingleOrDefaultAsync();
+        }
+
         public Task UpdateStatusAsync(Plan plan)
         {
             return UpdatePartialAsync(plan.Id, new { plan.Status, plan.StartDate, plan.DateModified });

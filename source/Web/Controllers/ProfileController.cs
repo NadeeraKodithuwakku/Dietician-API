@@ -29,7 +29,7 @@ namespace Dietician.Web.Controllers
         }
 
         [HttpGet("List")]
-        public Task<IActionResult> ListAsync([FromQuery]PagedListParameters parameters)
+        public Task<IActionResult> ListAsync([FromQuery] PagedListParameters parameters)
         {
             return _profileService.ListAsync(parameters).ResultAsync();
         }

@@ -9,13 +9,18 @@ namespace Dietician.Database
 {
     public static class PlanExpression
     {
+        public static Expression<Func<Plan, long>> UserId => plan => plan.User.Id;
         public static Expression<Func<Plan, PlanModel>> Model => plan => new PlanModel
         {
             Id = plan.Id,
+            ActivityLevel = (int)plan.ActivityLevel,
+            Goal = (int)plan.Goal,
+            Target = plan.Target,
+            Pace = (int)plan.Pace,
             Duration = plan.Duration,
             Status = (int)plan.Status,
-            Target = plan.Target,
-            Name = plan.Name
+            Name = plan.Name,
+            UserId = plan.UserId
         };
 
         public static Expression<Func<Plan, bool>> Id(long id)
