@@ -12,6 +12,12 @@ namespace Dietician.Model
 
         public DateTime Date { get; set; }
 
+        public string Message { get; set; }
+
+        public double ExtraCalorieAmount { get; set; }
+
+        public bool IsError { get; set; }
+
         public List<FoodItemModel> FoodItems { get; set; }
     }
 }

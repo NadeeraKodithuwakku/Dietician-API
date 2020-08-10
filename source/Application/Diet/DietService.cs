@@ -22,8 +22,8 @@ namespace Dietician.Application
         private readonly IPlanRepository planRepository;
         private readonly IProfileRepository profileRepository;
 
-        public bool isExerciseRequired;//TODO: to be removed if no need
-        public double calorieBalance;//TODO: to be returned to the UI
+        public double calorieBalance = 0.0;//TODO: to be returned to the UI
+        public string message = string.Empty;
 
         public DietService(
             IFoodRepository foodRepository,
@@ -61,7 +61,7 @@ namespace Dietician.Application
 
             ShowDietOutput(foodList);//Testing Purpose Only
 
-            return DietFactory.CreateDiet(@params.UserId, @params.Date, plan.Id, foodList);
+            return DietFactory.CreateDiet(@params.UserId, @params.Date, plan.Id, calorieBalance, message, foodList);
         }
 
         #region Helper Methods
@@ -93,13 +93,11 @@ namespace Dietician.Application
                     if (targetPeriod == (weightGap * 2))
                     {
                         requiredCalorieChangePerDay = 500;
-                        isExerciseRequired = false;
                     }
                     else
                     {
                         requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
                         requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
-                        isExerciseRequired = false;
                     }
                 }
                 else if (targetPeriod > weightGap)
@@ -107,20 +105,17 @@ namespace Dietician.Application
                     if (targetPeriod == weightGap)
                     {
                         requiredCalorieChangePerDay = 1000;
-                        isExerciseRequired = false;
                     }
                     else
                     {
                         requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
                         requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
-                        isExerciseRequired = false;
                     }
                 }
                 else
                 {
                     requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
                     requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
-                    isExerciseRequired = true;
                 }
             }
             return requiredCalorieChangePerDay;
@@ -150,12 +145,14 @@ namespace Dietician.Application
                     {
                         calorieIntakePerDay = totalEnergyExpenditure - defaultCalorieChangePerDay;
                         calorieBalance = requiredCalorieChangePerDay - defaultCalorieChangePerDay;
+                        message = "You can't achieve target by given duration without doing exercise, please do exercise to burn extra calories";
                     }
                 }
                 if (calorieIntakePerDay < defaultCalorieIntakePerDay)
                 {
-                    calorieIntakePerDay = totalEnergyExpenditure;
-                    calorieBalance = requiredCalorieChangePerDay;
+                    calorieIntakePerDay = defaultCalorieIntakePerDay;
+                    calorieBalance = requiredCalorieChangePerDay - (totalEnergyExpenditure - calorieIntakePerDay);
+                    message = "You can't achieve target by given duration without doing exercise, please do exercise to burn extra calories";
                 }
             }
             return calorieIntakePerDay;
@@ -198,16 +195,16 @@ namespace Dietician.Application
             if (isVeg)
             {
                 vegList = fullList.Where(f => f.IsVeg).ToList();
-                foodList = (List<FoodItemModel>)GenerateFoodList(calorieIntakePerDay, vegList);
+                foodList = GenerateFoodList(calorieIntakePerDay, vegList).ToList();
             }
             else
             {
-                foodList = (List<FoodItemModel>)GenerateFoodList(calorieIntakePerDay, (List<FoodItemModel>)fullList);
+                foodList = GenerateFoodList(calorieIntakePerDay, fullList).ToList();
             }
             return foodList;
         }
 
-        private IEnumerable<FoodItemModel> GenerateFoodList(double calorieIntakePerDay, List<FoodItemModel> foods)
+        private IEnumerable<FoodItemModel> GenerateFoodList(double calorieIntakePerDay, IEnumerable<FoodItemModel> foods)
         {
             var foodList = new List<FoodItemModel>();
             var bFCal = calorieIntakePerDay * 0.325;

@@ -10,13 +10,16 @@ namespace Dietician.Application
 {
     public static class DietFactory
     {
-        public static DietModel CreateDiet(long userId, DateTime date, long planId, IEnumerable<FoodItemModel> foodItems)
+        public static DietModel CreateDiet(long userId, DateTime date, long planId, double extraCalorie, string message, IEnumerable<FoodItemModel> foodItems)
         {
             return new DietModel()
             {
                 UserId = userId,
                 Date = date,
                 PlanId = planId,
+                ExtraCalorieAmount = extraCalorie,
+                Message = message,
+                IsError = !string.IsNullOrEmpty(message),
                 FoodItems = foodItems.ToList()
             };
         }
