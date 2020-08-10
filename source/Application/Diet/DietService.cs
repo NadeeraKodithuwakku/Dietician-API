@@ -77,11 +77,11 @@ namespace Dietician.Application
             double requiredCalorieChangePerDay;
             if (pace == 0)
             {
-                requiredCalorieChangePerDay = 500;
+                requiredCalorieChangePerDay = 500; // 0.5kg per week = 500Kcal per week
             }
             else if (pace == 1)
             {
-                requiredCalorieChangePerDay = 1000;
+                requiredCalorieChangePerDay = 1000; //1kg per week = 1000Kcal per week
             }
             else
             {
@@ -211,33 +211,61 @@ namespace Dietician.Application
         {
             var foodList = new List<FoodItemModel>();
             var bFCal = calorieIntakePerDay * 0.325;
+            var tempBfCal = bFCal;
             var lCal = calorieIntakePerDay * 0.375;
+            var tempLcal = lCal;
             var dCal = calorieIntakePerDay * 0.3;
+            var tempDcal = dCal;
+            var bFFoodCalSum = 0.0;
+            var lFoodCalSum = 0.0;
+            var dFoodCalSum = 0.0;
 
             foreach (var food in foods)
             {
                 var foodCalorie = GetFoodCalorieAmount(food);
-                if (bFCal > 0 && bFCal > foodCalorie && !foodList.Exists(x => x.FoodCategory == food.FoodCategory && x.Type == DietType.Breakfast))//TODO: handle white and red rice
+                if (tempBfCal > 0 && tempBfCal > foodCalorie && !foodList.Exists(x => x.FoodCategory == food.FoodCategory && x.Type == DietType.Breakfast))//TODO: handle white and red rice
                 {
                     food.Type = DietType.Breakfast;
                     foodList.Add(food);
-                    bFCal -= foodCalorie;
+                    bFFoodCalSum += foodCalorie;
+                    tempBfCal -= foodCalorie;
                 }
-                if (lCal > 0 && lCal > foodCalorie && !foodList.Exists(x => x.Name == food.Name))
+                if (tempLcal > 0 && tempLcal > foodCalorie && !foodList.Exists(x => x.Name == food.Name) && !foodList.Exists(x => x.FoodCategory == food.FoodCategory && x.Type == DietType.Lunch))
                 {
                     food.Type = DietType.Lunch;
                     foodList.Add(food);
-                    lCal -= foodCalorie;
+                    lFoodCalSum += foodCalorie;
+                    tempLcal -= foodCalorie;
                 }
-                if (dCal > 0 && dCal > foodCalorie && !foodList.Exists(x => x.Name == food.Name))
+                if (tempDcal > 0 && tempDcal > foodCalorie && !foodList.Exists(x => x.Name == food.Name) && !foodList.Exists(x => x.FoodCategory == food.FoodCategory && x.Type == DietType.Dinner))
                 {
                     food.Type = DietType.Dinner;
                     foodList.Add(food);
-                    dCal -= foodCalorie;
+                    dFoodCalSum += foodCalorie;
+                    tempDcal -= foodCalorie;
                 }
             }
+            CheckBalanceCalorie(bFCal, lCal, dCal, bFFoodCalSum, lFoodCalSum, dFoodCalSum);//Testing Purpose Only
+
+            FillBalanceFoodCalorieByQty(foodList, DietType.Breakfast, bFCal - bFFoodCalSum);
+            FillBalanceFoodCalorieByQty(foodList, DietType.Lunch, lCal - lFoodCalSum);
+            FillBalanceFoodCalorieByQty(foodList, DietType.Dinner, dCal - dFoodCalSum);
 
             return foodList;
+        }
+
+        private void FillBalanceFoodCalorieByQty(IEnumerable<FoodItemModel> foodList, DietType type, double balanceCalorie)
+        {
+            var foods = foodList.Where(f => f.Type == type).ToList();
+            var foodCount = foods.Count;
+            var calPortaion = balanceCalorie / foodCount;
+
+            foreach (var item in foods)
+            {
+                var foodCalorie = GetFoodCalorieAmount(item);
+                var extraFoodQuantity = 100 * calPortaion / foodCalorie;
+                item.FoodQuantity += extraFoodQuantity;
+            }
         }
 
         private double GetFoodCalorieAmount(FoodItemModel foodItem)
@@ -250,20 +278,27 @@ namespace Dietician.Application
         private void ShowDietOutput(IEnumerable<FoodItemModel> foodList)
         {
             Console.WriteLine("--------------BreakFirst--------------");
-            foreach (var item in foodList.Where(f => f.Type == DietType.Breakfast).Select(f => f.Name).ToList())
+            foreach (var item in foodList.Where(f => f.Type == DietType.Breakfast).Select(f => new { f.Name, f.FoodQuantity }).ToList())
             {
-                Console.WriteLine(item);
+                Console.WriteLine("{0}:{1}", item.Name, item.FoodQuantity);
             }
             Console.WriteLine("--------------Lunch--------------");
-            foreach (var item in foodList.Where(f => f.Type == DietType.Lunch).Select(f => f.Name).ToList())
+            foreach (var item in foodList.Where(f => f.Type == DietType.Lunch).Select(f => new { f.Name, f.FoodQuantity }).ToList())
             {
-                Console.WriteLine(item);
+                Console.WriteLine("{0}:{1}", item.Name, item.FoodQuantity);
             }
             Console.WriteLine("--------------Dinner--------------");
-            foreach (var item in foodList.Where(f => f.Type == DietType.Dinner).Select(f => f.Name).ToList())
+            foreach (var item in foodList.Where(f => f.Type == DietType.Dinner).Select(f => new { f.Name, f.FoodQuantity }).ToList())
             {
-                Console.WriteLine(item);
+                Console.WriteLine("{0}:{1}", item.Name, item.FoodQuantity);
             }
+        }
+
+        private static void CheckBalanceCalorie(double bFCal, double lCal, double dCal, double bFFoodCalSum, double lFoodCalSum, double dFoodCalSum)
+        {
+            Console.WriteLine("Initial Balance BF Calorie: {0}", bFCal - bFFoodCalSum);
+            Console.WriteLine("Initial Balance Lunch Calorie: {0}", lCal - lFoodCalSum);
+            Console.WriteLine("Initial Balance Dinner Calorie: {0}", dCal - dFoodCalSum);
         }
 
         #endregion Helper Methods

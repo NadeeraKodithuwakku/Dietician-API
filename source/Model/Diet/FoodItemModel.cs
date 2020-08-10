@@ -22,5 +22,7 @@ namespace Dietician.Model
 
         public int FoodCategory { get; set; }
 
+        public double FoodQuantity { get; set; }
+
     }
 }

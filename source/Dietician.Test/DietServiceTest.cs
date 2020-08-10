@@ -95,7 +95,7 @@ namespace Dietician.Test
             var dietParams = new DietParams()
             {
                 UserId = 1,
-                PlanId = 2,
+                PlanId = 3,
                 Date = DateTime.Now,
                 Type = (DietType)1
             };
