@@ -18,14 +18,14 @@ namespace Dietician.Model
             RuleFor(x => x.Name).NotEmpty();
         }
 
-        public void RuleForDuration()
-        {
-            RuleFor(x => x.Duration).GreaterThan(0);
-        }
+        //public void RuleForDuration()
+        //{
+        //    RuleFor(x => x.Duration).GreaterThan(0);
+        //}
 
-        public void RuleForTarget()
-        {
-            RuleFor(x => x.Target).GreaterThan(0);
-        }
+        //public void RuleForTarget()
+        //{
+        //    RuleFor(x => x.Target).GreaterThan(0);
+        //}
     }
 }

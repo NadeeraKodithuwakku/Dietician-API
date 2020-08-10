@@ -2,6 +2,7 @@ using Dietician.Domain.Enums;
 using DotNetCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Dietician.Domain.Diet
@@ -32,6 +33,9 @@ namespace Dietician.Domain.Diet
         public bool IsVeg { get; }
         public bool IsPregnant { get; }
 
+        public long UserId { get; set; }
+
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
         public void ChangeWeight(decimal weight)

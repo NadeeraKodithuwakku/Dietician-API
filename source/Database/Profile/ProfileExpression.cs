@@ -10,8 +10,6 @@ namespace Dietician.Database
 {
     public static class ProfileExpression
     {
-        public static Expression<Func<Profile, long>> UserId => profile => profile.User.Id;
-
         public static Expression<Func<Profile, ProfileModel>> Model => profile => new ProfileModel
         {
             Id = profile.Id,
@@ -20,12 +18,18 @@ namespace Dietician.Database
             Weight = profile.Weight,
             Height = profile.Height,
             IsPregnant = profile.IsPregnant,
-            IsVeg = profile.IsVeg
+            IsVeg = profile.IsVeg,
+            UserId = profile.UserId
         };
 
         public static Expression<Func<Profile, bool>> Id(long id)
         {
             return profile => profile.Id == id;
+        }
+
+        public static Expression<Func<Profile, bool>> UserId(long id)
+        {
+            return profile => profile.UserId == id;
         }
     }
 }

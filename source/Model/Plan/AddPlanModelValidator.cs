@@ -9,8 +9,8 @@ namespace Dietician.Model
         public AddPlanModelValidator()
         {
             RuleForName();
-            RuleForDuration();
-            RuleForTarget();
+            //RuleForDuration();
+            //RuleForTarget();
         }
     }
 }

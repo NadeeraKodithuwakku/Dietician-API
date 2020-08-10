@@ -10,24 +10,28 @@ namespace Dietician.Application
 {
     public static class DietFactory
     {
-        public static DietModel CreateDiet(User user, DateTime date, long planId, IEnumerable<Food> foodItems)
+        public static DietModel CreateDiet(long userId, DateTime date, long planId, IEnumerable<FoodItemModel> foodItems)
         {
             return new DietModel()
             {
-                UserId = user.Id,
+                UserId = userId,
                 Date = date,
                 PlanId = planId,
-                FoodItems = foodItems.AsQueryable().Select(item => new FoodItemModel()
-                {
-                    Carbohydrate = item.Carbohydrate,
-                    Fat = item.Fat,
-                    Id = item.Id,
-                    IsVeg = item.IsVeg,
-                    Name = item.Name,
-                    Protine = item.Protine,
-                    Type = DietType.All
-                }).ToList()
+                FoodItems = foodItems.ToList()
             };
+        }
+
+        public static IEnumerable<FoodItemModel> ConvertToFoodModel(IEnumerable<Food> foodItems)
+        {
+            return foodItems.Select(item => new FoodItemModel()
+            {
+                Carbohydrate = item.Carbohydrate,
+                Fat = item.Fat,
+                Id = item.Id,
+                IsVeg = item.IsVeg,
+                Name = item.Name,
+                Protine = item.Protine
+            });
         }
     }
 }

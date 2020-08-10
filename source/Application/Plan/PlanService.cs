@@ -16,11 +16,13 @@ namespace Dietician.Application
     {
         private readonly IPlanRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
-        public PlanService(IPlanRepository repository, IUnitOfWork unitOfWork)
+        public PlanService(IPlanRepository repository, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
         public async Task<IResult<long>> AddAsync(PlanModel model)
         {
@@ -30,7 +32,8 @@ namespace Dietician.Application
                 return Result<long>.Fail(validation.Message);
             }
 
-            var plan = PlanFactory.CreatePlan(model);
+            var user = await _userRepository.GetAsync(model.UserId);
+            var plan = PlanFactory.CreatePlan(model, user);
             await _repository.AddAsync(plan);
             await _unitOfWork.SaveChangesAsync();
 

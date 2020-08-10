@@ -51,7 +51,7 @@ namespace Dietician.Web
         }
 
         [HttpGet("List")]
-        public Task<IActionResult> ListAsync([FromQuery]PagedListParameters parameters)
+        public Task<IActionResult> ListAsync([FromQuery] PagedListParameters parameters)
         {
             return _userService.ListAsync(parameters).ResultAsync();
         }

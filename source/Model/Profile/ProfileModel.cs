@@ -15,7 +15,6 @@ namespace Dietician.Model
         public decimal Height { get; set; }
         public bool IsVeg { get; set; }
         public bool IsPregnant { get; set; }
-
         public long UserId { get; set; }
     }
 }

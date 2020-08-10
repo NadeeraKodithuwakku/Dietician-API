@@ -4,14 +4,16 @@ using Dietician.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dietician.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200809153023_AddPlanTableUserIdFK")]
+    partial class AddPlanTableUserIdFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +87,9 @@ namespace Dietician.Database.Migrations
                         .HasColumnType("real");
 
                     b.Property<int>("FoodCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FoodType")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsVeg")
