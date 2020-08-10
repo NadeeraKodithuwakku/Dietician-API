@@ -23,7 +23,7 @@ namespace Dietician.Test
             var foodRepositoryMock = new Mock<IFoodRepository>();
 
             planRepositoryMock.Setup(p => p.GetAsync(dietParams.PlanId)).Returns(Task.FromResult(new Plan("P1", ActivityLevel.Sedentary, Goal.Maintain_Weight, 0, Pace.Normal, 0)));
-            profileRepositoryMock.Setup(profile => profile.GetByUserIdAync(dietParams.UserId)).Returns(Task.FromResult
+            profileRepositoryMock.Setup(profile => profile.GetByUserIdAsync(dietParams.UserId)).Returns(Task.FromResult
                 (new ProfileModel()
                 {
                     UserId = 1,
