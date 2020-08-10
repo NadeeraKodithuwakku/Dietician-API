@@ -18,6 +18,6 @@ namespace Dietician.Model
 
         public bool IsVeg { get; set; }
 
-        public DietType FoodType { get; set; }
+        public int FoodCategory { get; set; }
     }
 }

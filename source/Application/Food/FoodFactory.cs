@@ -10,7 +10,7 @@ namespace Dietician.Application
     {
         public static Food CreateFood(FoodModel model)
         {
-            return new Food(model.Name, model.Fat, model.Protine, model.Carbohydrate, model.IsVeg);
+            return new Food(model.Name, model.Fat, model.Protine, model.Carbohydrate, model.IsVeg, (Domain.Enums.FoodCategory)model.FoodCategory);
         }
     }
 }

@@ -30,7 +30,8 @@ namespace Dietician.Application
                 Id = item.Id,
                 IsVeg = item.IsVeg,
                 Name = item.Name,
-                Protine = item.Protine
+                Protine = item.Protine,
+                FoodCategory = (int)item.FoodCategory
             });
         }
     }

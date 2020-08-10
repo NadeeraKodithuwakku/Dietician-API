@@ -16,7 +16,9 @@ namespace Dietician.Database
             Protine = food.Protine,
             Fat = food.Fat,
             Carbohydrate = food.Carbohydrate,
-            IsVeg = food.IsVeg
+            IsVeg = food.IsVeg,
+            FoodCategory = (int)food.FoodCategory
+
         };
 
         public static Expression<Func<Food, bool>> Id(long id)

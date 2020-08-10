@@ -19,6 +19,7 @@ namespace Dietician.Database
             builder.Property(food => food.Carbohydrate).IsRequired();
             builder.Property(food => food.Protine).IsRequired();
             builder.Property(food => food.Fat).IsRequired();
+            builder.Property(food => food.FoodCategory).IsRequired();
 
         }
     }

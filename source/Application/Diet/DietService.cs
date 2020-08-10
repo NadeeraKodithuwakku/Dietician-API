@@ -8,6 +8,7 @@ using DotNetCore.Results;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +21,18 @@ namespace Dietician.Application
         private readonly IFoodRepository foodRepository;
         private readonly IPlanRepository planRepository;
         private readonly IProfileRepository profileRepository;
-        private readonly IProgressRepository progressRepository;
 
-        public bool isExerciseRequired;
-        public double calorieBalance;
+        public bool isExerciseRequired;//TODO: to be removed if no need
+        public double calorieBalance;//TODO: to be returned to the UI
 
         public DietService(
             IFoodRepository foodRepository,
             IPlanRepository planRepository,
-            IUserRepository userRepository,
-            IProfileRepository profileRepository,
-            IProgressRepository progressRepository)
+            IProfileRepository profileRepository)
         {
             this.foodRepository = foodRepository;
             this.planRepository = planRepository;
-            //this.userRepository = userRepository;
             this.profileRepository = profileRepository;
-            this.progressRepository = progressRepository;
         }
 
         public async Task<DietModel> GetDietAsyc(DietParams @params)
@@ -50,7 +46,6 @@ namespace Dietician.Application
             var profile = await profileRepository.GetByUserIdAync(@params.UserId);
             var plan = await planRepository.GetAsync(@params.PlanId);
             var foods = await foodRepository.ListAsync();
-            var progress = await progressRepository.GetByUserIdAync(@params.UserId);
 
             var bmrValue = GetBMRValue((double)profile.Weight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
             var levelFactor = GetActivityLevelValue(plan.ActivityLevel);
@@ -64,7 +59,7 @@ namespace Dietician.Application
             }
             var foodList = GetFoodList(calorieIntakePerDay, DietFactory.ConvertToFoodModel(foods), profile.IsVeg);
 
-            Console.WriteLine(progress.Count);
+            ShowDietOutput(foodList);//Testing Purpose Only
 
             return DietFactory.CreateDiet(@params.UserId, @params.Date, plan.Id, foodList);
         }
@@ -222,7 +217,7 @@ namespace Dietician.Application
             foreach (var food in foods)
             {
                 var foodCalorie = GetFoodCalorieAmount(food);
-                if (bFCal > 0 && bFCal > foodCalorie)//TODO: handle white and red rice
+                if (bFCal > 0 && bFCal > foodCalorie && !foodList.Exists(x => x.FoodCategory == food.FoodCategory && x.Type == DietType.Breakfast))//TODO: handle white and red rice
                 {
                     food.Type = DietType.Breakfast;
                     foodList.Add(food);
@@ -250,6 +245,25 @@ namespace Dietician.Application
             var foodCalorie = (foodItem.Fat * 9) + (foodItem.Protine * 4) + (foodItem.Carbohydrate * 4);
 
             return foodCalorie;
+        }
+
+        private void ShowDietOutput(IEnumerable<FoodItemModel> foodList)
+        {
+            Console.WriteLine("--------------BreakFirst--------------");
+            foreach (var item in foodList.Where(f => f.Type == DietType.Breakfast).Select(f => f.Name).ToList())
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("--------------Lunch--------------");
+            foreach (var item in foodList.Where(f => f.Type == DietType.Lunch).Select(f => f.Name).ToList())
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("--------------Dinner--------------");
+            foreach (var item in foodList.Where(f => f.Type == DietType.Dinner).Select(f => f.Name).ToList())
+            {
+                Console.WriteLine(item);
+            }
         }
 
         #endregion Helper Methods

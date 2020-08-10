@@ -8,13 +8,14 @@ namespace Dietician.Domain.Diet
 {
     public class Food : Entity<long>, IAuditable
     {
-        public Food(string name, float fat, float protine, float carbohydrate, bool isVeg)
+        public Food(string name, float fat, float protine, float carbohydrate, bool isVeg, FoodCategory foodCategory)
         {
             Name = name;
             Fat = fat;
             Protine = protine;
             Carbohydrate = carbohydrate;
             IsVeg = isVeg;
+            FoodCategory = foodCategory;
         }
 
         public string Name { get; }
@@ -22,7 +23,7 @@ namespace Dietician.Domain.Diet
         public float Protine { get; private set; }
         public float Carbohydrate { get; private set; }
         public bool IsVeg { get; private set; }
-        public int FoodCategory { get; private set; }
+        public FoodCategory FoodCategory { get; private set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

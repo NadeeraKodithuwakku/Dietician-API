@@ -20,5 +20,7 @@ namespace Dietician.Model
 
         public DietType Type { get; set; }
 
+        public int FoodCategory { get; set; }
+
     }
 }
