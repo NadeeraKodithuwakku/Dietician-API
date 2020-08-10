@@ -71,6 +71,11 @@ namespace Dietician.Application
             return _userRepository.GetByIdAsync(id);
         }
 
+        public Task<UserModel> GetByLoginAsync(string email)
+        {
+            return _userRepository.GetByLoginAsync(email);
+        }
+
         public async Task InactivateAsync(long id)
         {
             var user = new User(id);

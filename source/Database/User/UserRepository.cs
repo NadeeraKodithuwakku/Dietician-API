@@ -23,6 +23,11 @@ namespace Dietician.Database
             return Queryable.Where(UserExpression.Id(id)).Select(UserExpression.Model).SingleOrDefaultAsync();
         }
 
+        public Task<UserModel> GetByLoginAsync(string email)
+        {
+            return Queryable.Where(UserExpression.Email(email)).Select(UserExpression.Model).SingleOrDefaultAsync();
+        }
+
         public Task UpdateStatusAsync(User user)
         {
             return UpdatePartialAsync(user.Id, new { user.Status });
