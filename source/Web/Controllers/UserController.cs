@@ -38,7 +38,7 @@ namespace Dietician.Web
             return _userService.GetAsync(id).ResultAsync();
         }
 
-        [HttpGet("details/{email}")]
+        [HttpGet("ByEmail/{email}")]
         public Task<IActionResult> GetByLoginAsync(string email)
         {
             return _userService.GetByLoginAsync(email).ResultAsync();

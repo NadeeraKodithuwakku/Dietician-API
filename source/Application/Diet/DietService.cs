@@ -47,7 +47,7 @@ namespace Dietician.Application
                 throw new ArgumentException(validation.Message);
             }
 
-            var profile = await profileRepository.GetByUserIdAync(@params.UserId);
+            var profile = await profileRepository.GetByUserIdAsync(@params.UserId);
             var plan = await planRepository.GetAsync(@params.PlanId);
             var foods = await foodRepository.ListAsync();
             var progress = await progressRepository.GetByUserIdAync(@params.UserId);

@@ -10,7 +10,7 @@ namespace Dietician.Database
 {
     public interface IProfileRepository : IRepository<Profile>
     {
-        Task<ProfileModel> GetByUserIdAync(long userId);
+        Task<ProfileModel> GetByUserIdAsync(long userId);
 
         Task<ProfileModel> GetByIdAsync(long id);
 

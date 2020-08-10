@@ -21,6 +21,7 @@ namespace Dietician.Application
         Task<IEnumerable<UserModel>> ListAsync();
 
         Task<IResult> UpdateAsync(UserModel model);
+
         Task<UserModel> GetByLoginAsync(string email);
     }
 }

@@ -56,6 +56,11 @@ namespace Dietician.Application
             return _profileRepository.GetByIdAsync(id);
         }
 
+        public Task<ProfileModel> GetByUserIdAsync(long id)
+        {
+            return _profileRepository.GetByUserIdAsync(id);
+        }
+
         public Task<PagedList<ProfileModel>> ListAsync(PagedListParameters parameters)
         {
             return _profileRepository.Queryable.Select(ProfileExpression.Model).ListAsync(parameters);

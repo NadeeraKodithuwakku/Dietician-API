@@ -25,7 +25,7 @@ namespace Dietician.Database
 
         internal static Expression<Func<User, bool>> Email(string email)
         {
-            return user => user.Auth.Login == email;
+            return user => user.Email.Value == email;
         }
     }
 }

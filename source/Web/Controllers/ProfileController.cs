@@ -41,6 +41,12 @@ namespace Dietician.Web.Controllers
             return _profileService.GetAsync(id).ResultAsync();
         }
 
+        [HttpGet("User/{id}")]
+        public Task<IActionResult> GetByUserIdAsync(long id)
+        {
+            return _profileService.GetByUserIdAsync(id).ResultAsync();
+        }
+
         // POST: api/Profile
         [HttpPost]
         public Task<IActionResult> AddAsync(ProfileModel model)
