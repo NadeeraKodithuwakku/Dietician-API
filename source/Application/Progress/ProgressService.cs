@@ -61,6 +61,14 @@ namespace Dietician.Application
             return _ProgressRepository.Queryable.Select(ProgressExpression.Model).ListAsync(parameters);
         }
 
+        public Task<PagedList<ProgressModel>> ListByUserIdAsync(PagedListParameters parameters, long id)
+        {
+            return _ProgressRepository.Queryable
+                .Where(ProgressExpression.UserId(id))
+                .Select(ProgressExpression.Model)
+                .ListAsync(parameters);
+        }
+
         public async Task<IEnumerable<ProgressModel>> ListAsync()
         {
             return await _ProgressRepository.Queryable.Select(ProgressExpression.Model).ToListAsync();

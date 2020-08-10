@@ -21,5 +21,6 @@ namespace Dietician.Application
         Task<IEnumerable<PlanModel>> ListAsync();
 
         Task<IResult> UpdateAsync(PlanModel model);
+        Task<PagedList<PlanModel>> ListByUserIdAsync(PagedListParameters parameters, long id);
     }
 }

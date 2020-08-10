@@ -21,5 +21,6 @@ namespace Dietician.Application
         Task<IEnumerable<ProfileModel>> ListAsync();
 
         Task<IResult> UpdateAsync(ProfileModel model);
+        Task<ProfileModel> GetByUserIdAsync(long id);
     }
 }

@@ -41,6 +41,12 @@ namespace Dietician.Web.Controllers
             return _progressService.GetAsync(id).ResultAsync();
         }
 
+        [HttpGet("User/{id}")]
+        public Task<IActionResult> ListByUserIdAsync([FromQuery] PagedListParameters parameters, [FromRoute] long id)
+        {
+            return _progressService.ListByUserIdAsync(parameters, id).ResultAsync();
+        }
+
         // POST: api/progress
         [HttpPost]
         public Task<IActionResult> AddAsync(ProgressModel model)

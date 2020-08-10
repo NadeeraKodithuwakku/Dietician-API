@@ -35,6 +35,12 @@ namespace Dietician.Web.Controllers
             return _planService.ListAsync(parameters).ResultAsync();
         }
 
+        [HttpGet("User/{id}")]
+        public Task<IActionResult> ListByUserIdAsync([FromQuery] PagedListParameters parameters, [FromRoute] long id)
+        {
+            return _planService.ListByUserIdAsync(parameters, id).ResultAsync();
+        }
+
         // GET: api/Profile/5
         [HttpGet("{id}")]
         public Task<IActionResult> GetAsync(long id)

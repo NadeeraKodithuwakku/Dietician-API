@@ -12,5 +12,6 @@ namespace Dietician.Database
         Task<UserModel> GetByIdAsync(long id);
 
         Task UpdateStatusAsync(User user);
+        Task<UserModel> GetByLoginAsync(string email);
     }
 }

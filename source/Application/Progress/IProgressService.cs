@@ -22,5 +22,6 @@ namespace Dietician.Application
         Task<IEnumerable<ProgressModel>> ListAsync();
 
         Task<IResult> UpdateAsync(ProgressModel model);
+        Task<PagedList<ProgressModel>> ListByUserIdAsync(PagedListParameters parameters, long id);
     }
 }

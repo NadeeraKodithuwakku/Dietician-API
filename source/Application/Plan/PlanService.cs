@@ -57,6 +57,11 @@ namespace Dietician.Application
             return _repository.Queryable.Select(PlanExpression.Model).ListAsync(parameters);
         }
 
+        public Task<PagedList<PlanModel>> ListByUserIdAsync(PagedListParameters parameters, long id)
+        {
+            return _repository.Queryable.Where(PlanExpression.UserId(id)).Select(PlanExpression.Model).ListAsync(parameters);
+        }
+
         public async Task<IEnumerable<PlanModel>> ListAsync()
         {
             return await _repository.Queryable.Select(PlanExpression.Model).ToListAsync();
