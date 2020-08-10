@@ -24,6 +24,7 @@ namespace Dietician.Database
             builder.Property(profile => profile.IsVeg).IsRequired();
 
             builder.HasOne(profile => profile.User);
+            builder.HasIndex(profile => profile.UserId).IsUnique();
         }
     }
 }

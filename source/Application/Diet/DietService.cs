@@ -22,7 +22,7 @@ namespace Dietician.Application
         private readonly IPlanRepository planRepository;
         private readonly IProfileRepository profileRepository;
 
-        public double calorieBalance = 0.0;//TODO: to be returned to the UI
+        public double calorieBalance = 0.0;
         public string message = string.Empty;
 
         public DietService(
@@ -67,6 +67,7 @@ namespace Dietician.Application
         #region Helper Methods
         private double GetBMRValue(double currentWeight, double height, int age, Gender gender)
         {
+            //based on Mifflin-St Jeor Equation
             double bmr = (10 * currentWeight) + (6.25 * height) - (5 * age);
             bmr = gender == 0 ? bmr + 5 : bmr - 161;
             return bmr;

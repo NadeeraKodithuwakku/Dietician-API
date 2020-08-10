@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dietician.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Diet")]
     [ApiController]
     public class DietController : ControllerBase
     {
