@@ -14,7 +14,7 @@ namespace Dietician.Database
             Id = progress.Id,
             Date = progress.Date,
             Weight = progress.Weight,
-            UserId = progress.User.Id
+            UserId = progress.UserId
         };
 
         public static Expression<Func<Progress, bool>> Id(long id)
@@ -24,7 +24,7 @@ namespace Dietician.Database
 
         public static Expression<Func<Progress, bool>> UserId(long id)
         {
-            return progress => progress.User.Id == id;
+            return progress => progress.UserId == id;
         }
     }
 }

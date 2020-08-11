@@ -1,6 +1,7 @@
 using DotNetCore.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Dietician.Domain.Diet
@@ -21,6 +22,9 @@ namespace Dietician.Domain.Diet
         public decimal Weight { get; private set; }
         public DateTime Date { get; }
 
+        public long UserId { get; set; }
+
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
         public void ChangeWeight(decimal weight)
