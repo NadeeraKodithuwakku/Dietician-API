@@ -1,0 +1,63 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: |
+        cd source/Web/Frontend
+        npm i
+        npm run production
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.100'
+
+    #- uses: lauchacarro/Azure-Storage-Action@master
+    #  with:
+    #   folder: 'source/Web/Frontend/dist'
+    #   connection-string: ${{ secrets.STORAGE_CONNECTION }}
+
+
+    # Runs a single command using the runners shell
+    - uses: azure/docker-login@v1
+      with:
+        login-server: registry20200507080840.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - run: |
+        cd source
+        cp Web/Dockerfile Dockerfile
+        docker build . -t registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}
+        docker push registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }} 
+      
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'DieticianWeb'
+        images: 'registry20200507080840.azurecr.io/dieticianweb:${{ github.sha }}'

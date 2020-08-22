@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.Extensions" Version="11.16.0" />
+        <PackageReference Include="DotNetCore.Objects" Version="11.16.0" />
+        <PackageReference Include="DotNetCore.Security" Version="11.16.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Database\Dietician.Database.csproj" />
+    </ItemGroup>
+</Project>

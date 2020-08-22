@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+    dietician_web:
+        build:
+            context: .
+            dockerfile: dockerfile
+            args:
+                ANGULAR_ENVIRONMENT: production
+        environment:
+            - ConnectionStrings:"Context=Server=tcp:dieticiandb.database.windows.net,1433;Initial Catalog=DieticianDB;Persist Security Info=False;User ID=nadeera;Password=1q2We3$rt%yu;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        image: dietician_web
+        container_name: dietician_web
+        networks:
+            - network
+        ports:
+            - 80:80
+            - 443:443
+
+networks:
+    network:
+
+volumes:
+    # mssql:
+    # mongo:
+    # redis:
