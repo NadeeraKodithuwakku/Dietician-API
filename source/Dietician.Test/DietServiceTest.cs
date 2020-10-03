@@ -32,7 +32,6 @@ namespace Dietician.Test
                     Height = 160, //cm
                     Weight = 80, //kg
                     Id = 1,
-                    IsPregnant = false,
                     IsVeg = true
                 }));
 

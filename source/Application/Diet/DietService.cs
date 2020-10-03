@@ -101,7 +101,7 @@ namespace Dietician.Application
                         requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
                     }
                 }
-                else if (targetPeriod > weightGap)
+                else if (targetPeriod >= weightGap)
                 {
                     if (targetPeriod == weightGap)
                     {

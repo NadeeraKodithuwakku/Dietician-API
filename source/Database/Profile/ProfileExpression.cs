@@ -17,7 +17,6 @@ namespace Dietician.Database
             Gender = (int)profile.Gender,
             Weight = profile.Weight,
             Height = profile.Height,
-            IsPregnant = profile.IsPregnant,
             IsVeg = profile.IsVeg,
             UserId = profile.UserId
         };

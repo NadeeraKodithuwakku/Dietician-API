@@ -17,8 +17,7 @@ namespace Dietician.Application
                 (Gender)profile.Gender,
                 profile.Weight,
                 profile.Height,
-                profile.IsVeg,
-                profile.IsPregnant)
+                profile.IsVeg)
             {
                 DateCreated = DateTime.Now,
                 DateModified = DateTime.Now,

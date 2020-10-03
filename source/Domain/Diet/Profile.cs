@@ -9,14 +9,13 @@ namespace Dietician.Domain.Diet
 {
     public class Profile : Entity<long>, IAuditable
     {
-        public Profile(int age, Gender gender, decimal weight, decimal height, bool isVeg, bool isPregnant)
+        public Profile(int age, Gender gender, decimal weight, decimal height, bool isVeg)
         {
             Age = age;
             Gender = gender;
             Weight = weight;
             Height = height;
             IsVeg = isVeg;
-            IsPregnant = isPregnant;
         }
 
         public Profile(long id) : base(id) { }
@@ -31,7 +30,6 @@ namespace Dietician.Domain.Diet
         public decimal Weight { get; private set; }
         public decimal Height { get; }
         public bool IsVeg { get; }
-        public bool IsPregnant { get; }
 
         public long UserId { get; set; }
 

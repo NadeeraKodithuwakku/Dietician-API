@@ -20,7 +20,6 @@ namespace Dietician.Database
             builder.Property(profile => profile.Height).IsRequired();
             builder.Property(profile => profile.Age).IsRequired();
             builder.Property(profile => profile.Gender).IsRequired();
-            builder.Property(profile => profile.IsPregnant).IsRequired();
             builder.Property(profile => profile.IsVeg).IsRequired();
 
             builder.HasOne(profile => profile.User);

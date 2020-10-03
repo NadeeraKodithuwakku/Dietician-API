@@ -14,6 +14,5 @@ namespace Dietician.Domain.Enums
 
         Professional_Athlete, //2.3
 
-
     }
 }
