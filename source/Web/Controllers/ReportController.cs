@@ -19,8 +19,8 @@ namespace Dietician.Web.Controllers
             _bmiService = bmiService;
         }
 
-        [HttpGet]
-        public Task<IActionResult> ListAsync()
+        [HttpGet("Bmi")]
+        public Task<IActionResult> GetUserBmi()
         {
             return _bmiService.GetUserBmi().ResultAsync();
         }
