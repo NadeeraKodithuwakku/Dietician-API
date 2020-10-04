@@ -8,21 +8,14 @@ namespace Dietician.Model
 
         public DietParamValidator()
         {
-            RuleForPlanId();
             RuleForUserId();
             RuleForDate();
-            RuleForType();
 
         }
 
         public void RuleForUserId()
         {
             RuleFor(x => x.UserId).NotEmpty();
-        }
-
-        public void RuleForPlanId()
-        {
-            RuleFor(x => x.PlanId).NotEmpty();
         }
 
         public void RuleForDate()

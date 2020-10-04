@@ -7,7 +7,6 @@ namespace Dietician.Model
     public class DietParams
     {
         public long UserId { get; set; }
-        public long PlanId { get; set; }
         public DateTime Date { get; set; }
         public DietType Type { get; set; }
     }

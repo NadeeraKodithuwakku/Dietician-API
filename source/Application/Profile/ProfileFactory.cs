@@ -23,7 +23,10 @@ namespace Dietician.Application
                 DateModified = DateTime.Now,
                 CreatedBy = "Admin",
                 ModifiedBy = "Admin",
-                UserId = user.Id
+                UserId = user.Id,
+                ActivityLevel = (ActivityLevel)profile.ActivityLevel,
+                Goal = (Goal)profile.Goal,
+                Pace = (Pace)profile.Pace
             };
 
             return result;

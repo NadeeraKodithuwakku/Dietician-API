@@ -17,6 +17,10 @@ namespace Dietician.Database
             Gender = (int)profile.Gender,
             Weight = profile.Weight,
             Height = profile.Height,
+            Target = profile.Target,
+            ActivityLevel = (int)profile.ActivityLevel,
+            Goal = (int)profile.Goal,
+            Pace = (int)profile.Pace,
             IsVeg = profile.IsVeg,
             UserId = profile.UserId
         };

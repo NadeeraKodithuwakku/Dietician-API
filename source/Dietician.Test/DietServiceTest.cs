@@ -19,10 +19,8 @@ namespace Dietician.Test
         {
             var dietParams = GetDietParams();
             var profileRepositoryMock = new Mock<IProfileRepository>();
-            var planRepositoryMock = new Mock<IPlanRepository>();
             var foodRepositoryMock = new Mock<IFoodRepository>();
 
-            planRepositoryMock.Setup(p => p.GetAsync(dietParams.PlanId)).Returns(Task.FromResult(new Plan("P1", ActivityLevel.Sedentary, Goal.Maintain_Weight, 0, Pace.Normal, 0)));
             profileRepositoryMock.Setup(profile => profile.GetByUserIdAsync(dietParams.UserId)).Returns(Task.FromResult
                 (new ProfileModel()
                 {
@@ -68,7 +66,7 @@ namespace Dietician.Test
 
                 }.AsEnumerable()));
 
-            DietService service = new DietService(foodRepositoryMock.Object, planRepositoryMock.Object, profileRepositoryMock.Object);
+            DietService service = new DietService(foodRepositoryMock.Object, profileRepositoryMock.Object);
 
             var output = service.GetDietAsyc(dietParams);
             Assert.NotNull(output.Result);
@@ -94,7 +92,6 @@ namespace Dietician.Test
             var dietParams = new DietParams()
             {
                 UserId = 1,
-                PlanId = 3,
                 Date = DateTime.Now,
                 Type = (DietType)1
             };

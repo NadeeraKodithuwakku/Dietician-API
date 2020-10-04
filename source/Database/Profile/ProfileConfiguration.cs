@@ -17,10 +17,14 @@ namespace Dietician.Database
 
             builder.Property(profile => profile.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(profile => profile.Weight).IsRequired();
+            builder.Property(profile => profile.Target).HasDefaultValue(0.0);
             builder.Property(profile => profile.Height).IsRequired();
             builder.Property(profile => profile.Age).IsRequired();
             builder.Property(profile => profile.Gender).IsRequired();
             builder.Property(profile => profile.IsVeg).IsRequired();
+            builder.Property(profile => profile.ActivityLevel).IsRequired();
+            builder.Property(profile => profile.Goal).IsRequired();
+            builder.Property(profile => profile.Pace).IsRequired();
 
             builder.HasOne(profile => profile.User);
             builder.HasIndex(profile => profile.UserId).IsUnique();

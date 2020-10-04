@@ -19,7 +19,6 @@ namespace Dietician.Application
     public class DietService : IDietService
     {
         private readonly IFoodRepository foodRepository;
-        private readonly IPlanRepository planRepository;
         private readonly IProfileRepository profileRepository;
 
         public double calorieBalance = 0.0;
@@ -27,11 +26,9 @@ namespace Dietician.Application
 
         public DietService(
             IFoodRepository foodRepository,
-            IPlanRepository planRepository,
             IProfileRepository profileRepository)
         {
             this.foodRepository = foodRepository;
-            this.planRepository = planRepository;
             this.profileRepository = profileRepository;
         }
 
@@ -44,24 +41,23 @@ namespace Dietician.Application
             }
 
             var profile = await profileRepository.GetByUserIdAsync(@params.UserId);
-            var plan = await planRepository.GetAsync(@params.PlanId);
             var foods = await foodRepository.ListAsync();
 
             var bmrValue = GetBMRValue((double)profile.Weight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
-            var levelFactor = GetActivityLevelValue(plan.ActivityLevel);
+            var levelFactor = GetActivityLevelValue((ActivityLevel)profile.ActivityLevel);
             var totalEnergyExpenditure = bmrValue * levelFactor;
             var calorieIntakePerDay = totalEnergyExpenditure;
 
-            if (plan.Goal == Goal.Change_Weight)
+            if ((Goal)profile.Goal == Goal.Change_Weight)
             {
-                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay((int)plan.Pace, (double)plan.Target, (double)profile.Weight, plan.Duration);
-                calorieIntakePerDay = GetCalorieIntakePerDay((double)plan.Target, (double)profile.Weight, requiredCalorieChangePerDay, totalEnergyExpenditure);
+                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay(profile.Pace, (double)profile.Target, (double)profile.Weight, 0);
+                calorieIntakePerDay = GetCalorieIntakePerDay((double)profile.Target, (double)profile.Weight, requiredCalorieChangePerDay, totalEnergyExpenditure);
             }
             var foodList = GetFoodList(calorieIntakePerDay, DietFactory.ConvertToFoodModel(foods), profile.IsVeg);
 
             ShowDietOutput(foodList);//Testing Purpose Only
 
-            return DietFactory.CreateDiet(@params.UserId, @params.Date, plan.Id, calorieBalance, message, foodList);
+            return DietFactory.CreateDiet(@params.UserId, @params.Date, calorieBalance, message, foodList);
         }
 
         #region Helper Methods
@@ -78,45 +74,45 @@ namespace Dietician.Application
             double requiredCalorieChangePerDay;
             if (pace == 0)
             {
-                requiredCalorieChangePerDay = 500; // 0.5kg per week = 500Kcal per week
+                requiredCalorieChangePerDay = 250; // 0.25kg per week ~ 1750Kcal, 250Kcal per week
             }
             else if (pace == 1)
             {
-                requiredCalorieChangePerDay = 1000; //1kg per week = 1000Kcal per week
+                requiredCalorieChangePerDay = 500; //0.5kg per week ~ 3500Kcal , 500Kcal per day
+            }
+            else if (pace == 2)
+            {
+                requiredCalorieChangePerDay = 750; //0.75kg per week ~ 5250Kcal,  750Kcal per week
+            }
+            else if (pace == 3)
+            {
+                requiredCalorieChangePerDay = 1000; //1kg per week ~ 7000Kcal, 1000Kcal per day
             }
             else
             {
                 //if user enter duration manually
                 double weightGap = Math.Abs(currentWeight - targetWeight);
                 double requiredWeightChangePerDay;
-                if (targetPeriod >= (weightGap * 2))//targetPeriod is taking as weeks
+                if (targetPeriod == (weightGap * 4))//targetPeriod is taking as weeks
                 {
-                    if (targetPeriod == (weightGap * 2))
-                    {
-                        requiredCalorieChangePerDay = 500;
-                    }
-                    else
-                    {
-                        requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
-                        requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
-                    }
+                    requiredCalorieChangePerDay = 250;
                 }
-                else if (targetPeriod >= weightGap)
+                else if (targetPeriod == (weightGap * 2))
                 {
-                    if (targetPeriod == weightGap)
-                    {
-                        requiredCalorieChangePerDay = 1000;
-                    }
-                    else
-                    {
-                        requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
-                        requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
-                    }
+                    requiredCalorieChangePerDay = 500;
+                }
+                else if (targetPeriod == (weightGap * 1.3))
+                {
+                    requiredCalorieChangePerDay = 750;
+                }
+                else if (targetPeriod == weightGap)
+                {
+                    requiredCalorieChangePerDay = 1000;
                 }
                 else
                 {
                     requiredWeightChangePerDay = weightGap / (targetPeriod * 7);
-                    requiredCalorieChangePerDay = requiredWeightChangePerDay * (3500 / 0.45);
+                    requiredCalorieChangePerDay = requiredWeightChangePerDay * 7716.179;//1kg = 7716.179 calorie
                 }
             }
             return requiredCalorieChangePerDay;
@@ -125,8 +121,8 @@ namespace Dietician.Application
         private double GetCalorieIntakePerDay(double targetWeight, double currentWeight, double requiredCalorieChangePerDay, double totalEnergyExpenditure)
         {
             double calorieIntakePerDay = 0.0;
-            var defaultCalorieChangePerDay = 1000;// maximum calorie reduction per day
-            var defaultCalorieIntakePerDay = 1200;// maximum calorie intake per day
+            var defaultCalorieChangePerDay = 1000;// recommended minimum calorie reduction per day
+            var defaultCalorieIntakePerDay = 1200;// recommended maximum calorie intake per day
 
             if (targetWeight > currentWeight)
             {

@@ -28,8 +28,15 @@ namespace Dietician.Domain.Diet
         public int Age { get; }
         public Gender Gender { get; }
         public decimal Weight { get; private set; }
+
+        public decimal Target { get; }
         public decimal Height { get; }
         public bool IsVeg { get; }
+
+        public ActivityLevel ActivityLevel { get; set; }
+
+        public Goal Goal { get; set; }
+        public Pace Pace { get; set; }
 
         public long UserId { get; set; }
 
