@@ -121,6 +121,7 @@ namespace Dietician.Application.Report
             {
                 var model = new RatingModel
                 {
+                    FoodId = food.Id,
                     Food = FoodFactory.CreateFood(food),
                     UserId = userId
                 };
