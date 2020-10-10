@@ -48,7 +48,7 @@ namespace Dietician.Application
 
             // Order by Rating
             var foodRating = await reportService.GetFoodRatingByUserId(@params.UserId);
-            var foodDateRating = await reportService.GetFoodRatingByUserId((int)@params.Date.DayOfWeek);
+            var foodDateRating = await reportService.GetFoodRatingByDayOfWeek((int)@params.Date.DayOfWeek);
             foods = foods
                     .OrderBy(f => foodRating.Single(r => r.FoodId == f.Id).Rating)
                     .ThenBy(f => foodDateRating.Single(r => r.FoodId == f.Id).Rating);
