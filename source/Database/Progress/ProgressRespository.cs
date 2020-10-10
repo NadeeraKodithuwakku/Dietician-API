@@ -17,6 +17,11 @@ namespace Dietician.Database
         {
         }
 
+        public Task<List<ProgressModel>> GetByDateAync(DateTime date)
+        {
+            return Queryable.Where(ProgressExpression.Date(date)).Select(ProgressExpression.Model).ToListAsync();
+        }
+
         public Task<ProgressModel> GetByIdAsync(long id)
         {
             return Queryable.Where(ProgressExpression.Id(id)).Select(ProgressExpression.Model).SingleOrDefaultAsync();

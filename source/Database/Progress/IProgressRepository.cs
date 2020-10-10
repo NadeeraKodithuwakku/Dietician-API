@@ -12,6 +12,8 @@ namespace Dietician.Database
     {
         Task<List<ProgressModel>> GetByUserIdAync(long id);
 
+        Task<List<ProgressModel>> GetByDateAync(DateTime date);
+
         Task<ProgressModel> GetByIdAsync(long id);
 
         Task UpdateWeightAsync(Progress progress);

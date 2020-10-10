@@ -26,5 +26,11 @@ namespace Dietician.Database
         {
             return progress => progress.UserId == id;
         }
+
+        public static Expression<Func<Progress, bool>> Date(DateTime date)
+        {
+            return progress => progress.Date.Year == date.Year && progress.Date.Month == date.Month
+                && progress.Date.Day == date.Day;
+        }
     }
 }
