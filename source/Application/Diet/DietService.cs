@@ -1,3 +1,4 @@
+using Dietician.Application.Report;
 using Dietician.Database;
 using Dietician.Domain.Diet;
 using Dietician.Domain.Enums;
@@ -20,16 +21,18 @@ namespace Dietician.Application
     {
         private readonly IFoodRepository foodRepository;
         private readonly IProfileRepository profileRepository;
-
+        private readonly IReportService reportService;
         public double calorieBalance = 0.0;
         public string message = string.Empty;
 
         public DietService(
             IFoodRepository foodRepository,
-            IProfileRepository profileRepository)
+            IProfileRepository profileRepository,
+            IReportService reportService)
         {
             this.foodRepository = foodRepository;
             this.profileRepository = profileRepository;
+            this.reportService = reportService;
         }
 
         public async Task<DietModel> GetDietAsyc(DietParams @params)
@@ -42,6 +45,14 @@ namespace Dietician.Application
 
             var profile = await profileRepository.GetByUserIdAsync(@params.UserId);
             var foods = await foodRepository.ListAsync();
+
+            // Order by Rating
+            var foodRating = await reportService.GetFoodRatingByUserId(@params.UserId);
+            var foodDateRating = await reportService.GetFoodRatingByUserId((int)@params.Date.DayOfWeek);
+            foods = foods
+                    .OrderBy(f => foodRating.Single(r => r.FoodId == f.Id).Rating)
+                    .ThenBy(f => foodDateRating.Single(r => r.FoodId == f.Id).Rating);
+
 
             var bmrValue = GetBMRValue((double)profile.CurrentWeight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
             var levelFactor = GetActivityLevelValue((ActivityLevel)profile.ActivityLevel);

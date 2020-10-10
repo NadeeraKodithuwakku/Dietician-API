@@ -8,12 +8,13 @@ namespace Dietician.Domain.Diet
 {
     public class UserFood : Entity<long>, IAuditable
     {
-        public UserFood(long userId, long foodId, int rating, DateTime date)
+        public UserFood(long userId, long foodId, int rating, DateTime date, int dayOfWeek)
         {
             UserId = userId;
             FoodId = foodId;
             Rating = rating;
             Date = date;
+            DayOfWeek = dayOfWeek;
         }
 
         public long UserId { get; set; }
@@ -27,7 +28,7 @@ namespace Dietician.Domain.Diet
 
         public int Rating { get; set; }
         public DateTime Date { get; set; }
-
+        public int DayOfWeek { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
