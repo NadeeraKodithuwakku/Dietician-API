@@ -26,7 +26,7 @@ namespace Dietician.Database
             return Queryable.Where(ProfileExpression.UserId(userId)).Select(ProfileExpression.Model).SingleOrDefaultAsync();
         }
 
-        public Task UpdateWeightAsync(Profile profile)
+        public Task UpdateProfileAsync(Profile profile)
         {
             return UpdatePartialAsync(profile.Id, new
             {

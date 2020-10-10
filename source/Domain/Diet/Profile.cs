@@ -1,4 +1,5 @@
 using Dietician.Domain.Enums;
+using Dietician.Model;
 using DotNetCore.Domain;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,13 @@ namespace Dietician.Domain.Diet
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
 
-        public int Age { get; }
-        public Gender Gender { get; }
+        public int Age { get; set; }
+        public Gender Gender { get; set; }
         public decimal Weight { get; private set; }
         public decimal CurrentWeight { get; set; }
-        public decimal TargetWeight { get; }
-        public decimal Height { get; }
-        public bool IsVeg { get; }
+        public decimal TargetWeight { get; set; }
+        public decimal Height { get; set; }
+        public bool IsVeg { get; set; }
 
         public ActivityLevel ActivityLevel { get; set; }
 
@@ -43,10 +44,24 @@ namespace Dietician.Domain.Diet
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public void ChangeWeight(decimal weight)
+        public void UpdateProfile(ProfileModel profile)
         {
-            CurrentWeight = weight;
+            CurrentWeight = profile.CurrentWeight;
+            Weight = profile.Weight;
+            ActivityLevel = (ActivityLevel)profile.ActivityLevel;
+            Age = profile.Age;
+            Height = profile.Height;
+            Gender = (Gender)profile.Gender;
+            Goal = (Goal)profile.Goal;
+            TargetWeight = profile.TargetWeight;
+            Pace = (Pace)profile.Pace;
+            IsVeg = profile.IsVeg;
             DateModified = DateTime.Now;
+        }
+
+        public void UpdateCurrentWeight(decimal currentWeight)
+        {
+            CurrentWeight = currentWeight;
         }
     }
 }

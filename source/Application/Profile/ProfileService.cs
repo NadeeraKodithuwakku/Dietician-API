@@ -87,9 +87,9 @@ namespace Dietician.Application
                 return Result.Success();
             }
 
-            profile.ChangeWeight(model.Weight);
+            profile.UpdateProfile(model);
 
-            await _profileRepository.UpdateWeightAsync(profile);
+            await _profileRepository.UpdateProfileAsync(profile);
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();

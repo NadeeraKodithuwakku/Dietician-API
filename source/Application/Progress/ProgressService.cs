@@ -16,16 +16,19 @@ namespace Dietician.Application
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProgressRepository _ProgressRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _profileRepository;
 
         public ProgressService
             (
             IUnitOfWork unitOfWork,
             IProgressRepository ProgressRepository,
+            IProfileRepository profileRepository,
             IUserRepository userRepository
             )
         {
             _unitOfWork = unitOfWork;
             _ProgressRepository = ProgressRepository;
+            _profileRepository = profileRepository;
             _userRepository = userRepository;
         }
 
@@ -36,8 +39,11 @@ namespace Dietician.Application
             {
                 return Result<long>.Fail(validation.Message);
             }
+            var profileModel = await _profileRepository.GetByUserIdAsync(model.UserId);
+            var profile = await _profileRepository.GetAsync(profileModel.Id);
             var user = await _userRepository.GetAsync(model.UserId);
             var Progress = ProgressFactory.CreateProgress(model, user);
+            profile.UpdateCurrentWeight(model.Weight);
             await _ProgressRepository.AddAsync(Progress);
             await _unitOfWork.SaveChangesAsync();
             return Result<long>.Success(Progress.Id);

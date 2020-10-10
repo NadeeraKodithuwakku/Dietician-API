@@ -14,6 +14,6 @@ namespace Dietician.Database
 
         Task<ProfileModel> GetByIdAsync(long id);
 
-        Task UpdateWeightAsync(Profile profile);
+        Task UpdateProfileAsync(Profile profile);
     }
 }

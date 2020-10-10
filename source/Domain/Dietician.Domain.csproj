@@ -5,4 +5,7 @@
     <ItemGroup>
         <PackageReference Include="DotNetCore.Domain" Version="11.16.0" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Model\Dietician.Model.csproj" />
+    </ItemGroup>
 </Project>
