@@ -121,8 +121,8 @@ namespace Dietician.Application
         private double GetCalorieIntakePerDay(double targetWeight, double currentWeight, double requiredCalorieChangePerDay, double totalEnergyExpenditure)
         {
             double calorieIntakePerDay = 0.0;
-            var defaultCalorieChangePerDay = 1000;// recommended minimum calorie reduction per day
-            var defaultCalorieIntakePerDay = 1200;// recommended maximum calorie intake per day
+            var defaultCalorieChangePerDay = 1000;// recommended maximum calorie reduction per day
+            var defaultCalorieIntakePerDay = 1200;// recommended minimum calorie intake per day
 
             if (targetWeight > currentWeight)
             {
