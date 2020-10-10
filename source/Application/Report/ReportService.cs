@@ -21,13 +21,13 @@ namespace Dietician.Application.Report
             this.profileRepository = profileRepository;
             this.userRepository = userRepository;
         }
-        public async Task<IEnumerable<HealthCategoryDetailModel>> GetHealthCategories(int days)
+        public async Task<IEnumerable<HealthCategoryDetailModel>> GetHealthCategories(int days, DateTime reportDate)
         {
             List<HealthCategoryDetailModel> result = new List<HealthCategoryDetailModel>();
             List<ProfileModel> profiles = new List<ProfileModel>();
             for (int i = 0; i < days; i++)
             {
-                var date = DateTime.Now.AddDays(-i);
+                var date = reportDate.AddDays(-i);
                 var progress = await progressRepository.GetByDateAync(date);
                 var underWeightCount = 0;
                 var healthyCount = 0;
@@ -43,7 +43,7 @@ namespace Dietician.Application.Report
                     }
                     if (profile != null)
                     {
-                        var BMI = (double)profile.Weight / Math.Pow((double)(profile.Height / 100), 2);
+                        var BMI = (double)item.Weight / Math.Pow((double)(profile.Height / 100), 2);
 
                         // healthy range : 18.5 and 24.9
                         if (BMI < 18.5)

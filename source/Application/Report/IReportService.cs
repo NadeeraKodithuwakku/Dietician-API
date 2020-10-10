@@ -8,7 +8,7 @@ namespace Dietician.Application.Report
 {
     public interface IReportService
     {
-        Task<IEnumerable<HealthCategoryDetailModel>> GetHealthCategories(int days);
+        Task<IEnumerable<HealthCategoryDetailModel>> GetHealthCategories(int days, DateTime reportDate);
         Task<IEnumerable<TopGainLossModel>> GetTopGainers(DateTime date, int count);
         Task<IEnumerable<TopGainLossModel>> GetTopLoosers(DateTime date, int count);
     }

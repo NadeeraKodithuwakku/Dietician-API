@@ -27,10 +27,10 @@ namespace Dietician.Web.Controllers
             return _bmiService.GetUserBmi().ResultAsync();
         }
 
-        [HttpGet("Health/{days}")]
-        public Task<IActionResult> GetHealthCategories([FromRoute] int days)
+        [HttpGet("Health/{days}/{date}")]
+        public Task<IActionResult> GetHealthCategories([FromRoute] int days, [FromRoute] DateTime date)
         {
-            return _reportService.GetHealthCategories(days).ResultAsync();
+            return _reportService.GetHealthCategories(days, date).ResultAsync();
         }
 
         [HttpGet("TopGainers/{date}/{count}")]
