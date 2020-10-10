@@ -11,5 +11,7 @@ namespace Dietician.Application
     public interface IUserFoodService
     {
         Task<IResult<long>> AddAsync(UserFoodModel model);
+
+        Task<IEnumerable<UserFoodModel>> ListAsync();
     }
 }

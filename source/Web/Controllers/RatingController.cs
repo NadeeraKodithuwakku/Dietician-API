@@ -26,5 +26,11 @@ namespace Dietician.Web.Controllers
         {
             return _userFoodService.AddAsync(model).ResultAsync();
         }
+
+        [HttpGet]
+        public Task<IActionResult> ListAsync()
+        {
+            return _userFoodService.ListAsync().ResultAsync();
+        }
     }
 }

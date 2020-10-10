@@ -3,8 +3,10 @@ using Dietician.Model;
 using Dietician.Model.UserFood;
 using DotNetCore.Objects;
 using DotNetCore.Results;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +33,11 @@ namespace Dietician.Application
             await _userFoodRepository.AddAsync(entity);
             await _unitOfWork.SaveChangesAsync();
             return Result<long>.Success(entity.Id);
+        }
+
+        public async Task<IEnumerable<UserFoodModel>> ListAsync()
+        {
+            return await _userFoodRepository.Queryable.Select(f => UserFoodFactory.CreateModel(f)).ToListAsync();
         }
     }
 }
