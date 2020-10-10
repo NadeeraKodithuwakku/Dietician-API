@@ -43,15 +43,15 @@ namespace Dietician.Application
             var profile = await profileRepository.GetByUserIdAsync(@params.UserId);
             var foods = await foodRepository.ListAsync();
 
-            var bmrValue = GetBMRValue((double)profile.Weight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
+            var bmrValue = GetBMRValue((double)profile.CurrentWeight, (double)profile.Height, profile.Age, (Gender)profile.Gender);
             var levelFactor = GetActivityLevelValue((ActivityLevel)profile.ActivityLevel);
             var totalEnergyExpenditure = bmrValue * levelFactor;
             var calorieIntakePerDay = totalEnergyExpenditure;
 
             if ((Goal)profile.Goal == Goal.Change_Weight)
             {
-                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay(profile.Pace, (double)profile.TargetWeight, (double)profile.Weight, 0);
-                calorieIntakePerDay = GetCalorieIntakePerDay((double)profile.TargetWeight, (double)profile.Weight, requiredCalorieChangePerDay, totalEnergyExpenditure);
+                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay(profile.Pace, (double)profile.TargetWeight, (double)profile.CurrentWeight, 0);
+                calorieIntakePerDay = GetCalorieIntakePerDay((double)profile.TargetWeight, (double)profile.CurrentWeight, requiredCalorieChangePerDay, totalEnergyExpenditure);
             }
             var foodList = GetFoodList(calorieIntakePerDay, DietFactory.ConvertToFoodModel(foods), profile.IsVeg);
 
