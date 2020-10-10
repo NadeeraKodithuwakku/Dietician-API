@@ -1,4 +1,5 @@
 using Dietician.Application;
+using Dietician.Application.Report;
 using Dietician.Database;
 using Dietician.Domain.Diet;
 using Dietician.Domain.Enums;
@@ -20,6 +21,7 @@ namespace Dietician.Test
             var dietParams = GetDietParams();
             var profileRepositoryMock = new Mock<IProfileRepository>();
             var foodRepositoryMock = new Mock<IFoodRepository>();
+            var reportServiceMock = new Mock<IReportService>();
 
             profileRepositoryMock.Setup(profile => profile.GetByUserIdAsync(dietParams.UserId)).Returns(Task.FromResult
                 (new ProfileModel()
@@ -66,7 +68,7 @@ namespace Dietician.Test
 
                 }.AsEnumerable()));
 
-            DietService service = new DietService(foodRepositoryMock.Object, profileRepositoryMock.Object);
+            DietService service = new DietService(foodRepositoryMock.Object, profileRepositoryMock.Object, reportServiceMock.Object);
 
             var output = service.GetDietAsyc(dietParams);
             Assert.NotNull(output.Result);
