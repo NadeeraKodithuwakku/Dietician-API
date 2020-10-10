@@ -17,5 +17,17 @@ namespace Dietician.Application.Report
                 UnderWeightCount = underWeight
             };
         }
+
+        internal static TopGainLossModel CreateTopGainerLooserModel(long userId, string name, string surname, decimal change, decimal precentage, decimal weight)
+        {
+            return new TopGainLossModel
+            {
+                UserId = userId,
+                FullName = $"{name} {surname}",
+                Change = change,
+                Percentage = precentage,
+                Weight = weight
+            };
+        }
     }
 }

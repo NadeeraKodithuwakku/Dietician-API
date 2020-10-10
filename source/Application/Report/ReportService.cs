@@ -13,11 +13,13 @@ namespace Dietician.Application.Report
     {
         private readonly IProgressRepository progressRepository;
         private readonly IProfileRepository profileRepository;
+        private readonly IUserRepository userRepository;
 
-        public ReportService(IProgressRepository progressRepository, IProfileRepository profileRepository)
+        public ReportService(IProgressRepository progressRepository, IProfileRepository profileRepository, IUserRepository userRepository)
         {
             this.progressRepository = progressRepository;
             this.profileRepository = profileRepository;
+            this.userRepository = userRepository;
         }
         public async Task<IEnumerable<HealthCategoryDetailModel>> GetHealthCategories(int days)
         {
@@ -66,5 +68,54 @@ namespace Dietician.Application.Report
 
             return result;
         }
+
+        public async Task<IEnumerable<TopGainLossModel>> GetTopGainers(DateTime date, int count)
+        {
+            return await GetRange(date, count, true);
+        }
+
+
+        public async Task<IEnumerable<TopGainLossModel>> GetTopLoosers(DateTime date, int count)
+        {
+            return await GetRange(date, count, false);
+        }
+
+        private async Task<IEnumerable<TopGainLossModel>> GetRange(DateTime date, int count, bool isGainers)
+        {
+            List<TopGainLossModel> result = new List<TopGainLossModel>();
+            var lastDay = date.AddDays(-1);
+            var dayBeforeLastDay = date.AddDays(-2);
+
+            var progressLast = await progressRepository.GetByDateAync(lastDay);
+            var progressBeforeLast = await progressRepository.GetByDateAync(dayBeforeLastDay);
+
+            foreach (var item in progressLast)
+            {
+                var progressBefore = progressBeforeLast.Where(p => p.UserId == item.UserId).SingleOrDefault();
+
+                if (progressBefore != null)
+                {
+                    var change = item.Weight - progressBefore.Weight;
+
+                    if ((change > 0 && isGainers) || (change < 0 && !isGainers))
+                    {
+                        var precentage = change / progressBefore.Weight * 100;
+                        var user = await userRepository.GetByIdAsync(item.UserId);
+
+                        TopGainLossModel model = ReportFactory.CreateTopGainerLooserModel(
+                            item.UserId, user.Name, user.Surname, change, precentage, item.Weight);
+                        result.Add(model);
+
+                    }
+                }
+            }
+            result.Sort((a, b) => { return a.Percentage.CompareTo(b.Percentage); });
+            if (result.Count > count)
+            {
+                result.RemoveRange(count, result.Count - count);
+            }
+            return result;
+        }
+
     }
 }

@@ -40,6 +40,7 @@ namespace Dietician.Database
                 profile.Goal,
                 profile.TargetWeight,
                 profile.Pace,
+                profile.IsVeg
             });
         }
     }

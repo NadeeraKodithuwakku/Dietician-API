@@ -32,5 +32,17 @@ namespace Dietician.Web.Controllers
         {
             return _reportService.GetHealthCategories(days).ResultAsync();
         }
+
+        [HttpGet("TopGainers/{date}/{count}")]
+        public Task<IActionResult> GetTopGainers([FromRoute] DateTime date, [FromRoute] int count)
+        {
+            return _reportService.GetTopGainers(date, count).ResultAsync();
+        }
+
+        [HttpGet("TopLoosers/{date}/{count}")]
+        public Task<IActionResult> GetTopLoosers([FromRoute] DateTime date, [FromRoute] int count)
+        {
+            return _reportService.GetTopLoosers(date, count).ResultAsync();
+        }
     }
 }
