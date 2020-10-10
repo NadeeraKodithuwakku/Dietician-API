@@ -28,7 +28,7 @@ namespace Dietician.Database
 
         public Task UpdateWeightAsync(Profile profile)
         {
-            return UpdatePartialAsync(profile.Id, new { profile.Weight, profile.DateModified });
+            return UpdatePartialAsync(profile.Id, new { profile.CurrentWeight, profile.DateModified });
         }
     }
 }

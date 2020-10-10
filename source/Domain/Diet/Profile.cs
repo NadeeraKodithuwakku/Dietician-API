@@ -28,8 +28,8 @@ namespace Dietician.Domain.Diet
         public int Age { get; }
         public Gender Gender { get; }
         public decimal Weight { get; private set; }
-
-        public decimal Target { get; }
+        public decimal CurrentWeight { get; set; }
+        public decimal TargetWeight { get; }
         public decimal Height { get; }
         public bool IsVeg { get; }
 
@@ -45,7 +45,7 @@ namespace Dietician.Domain.Diet
 
         public void ChangeWeight(decimal weight)
         {
-            Weight = weight;
+            CurrentWeight = weight;
             DateModified = DateTime.Now;
         }
     }

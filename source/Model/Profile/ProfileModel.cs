@@ -10,8 +10,8 @@ namespace Dietician.Model
         public int Age { get; set; }
         public int Gender { get; set; }
         public decimal Weight { get; set; }
-
-        public decimal Target { get; set; }
+        public decimal CurrentWeight { get; set; }
+        public decimal TargetWeight { get; set; }
         public decimal Height { get; set; }
         public bool IsVeg { get; set; }
         public long UserId { get; set; }

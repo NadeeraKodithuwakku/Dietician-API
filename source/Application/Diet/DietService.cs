@@ -50,8 +50,8 @@ namespace Dietician.Application
 
             if ((Goal)profile.Goal == Goal.Change_Weight)
             {
-                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay(profile.Pace, (double)profile.Target, (double)profile.Weight, 0);
-                calorieIntakePerDay = GetCalorieIntakePerDay((double)profile.Target, (double)profile.Weight, requiredCalorieChangePerDay, totalEnergyExpenditure);
+                double requiredCalorieChangePerDay = GetTargetGainOrLossCaloriePerDay(profile.Pace, (double)profile.TargetWeight, (double)profile.Weight, 0);
+                calorieIntakePerDay = GetCalorieIntakePerDay((double)profile.TargetWeight, (double)profile.Weight, requiredCalorieChangePerDay, totalEnergyExpenditure);
             }
             var foodList = GetFoodList(calorieIntakePerDay, DietFactory.ConvertToFoodModel(foods), profile.IsVeg);
 

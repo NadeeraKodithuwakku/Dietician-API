@@ -26,7 +26,8 @@ namespace Dietician.Application
                 UserId = user.Id,
                 ActivityLevel = (ActivityLevel)profile.ActivityLevel,
                 Goal = (Goal)profile.Goal,
-                Pace = (Pace)profile.Pace
+                Pace = (Pace)profile.Pace,
+                CurrentWeight = profile.Weight
             };
 
             return result;

@@ -17,7 +17,8 @@ namespace Dietician.Database
 
             builder.Property(profile => profile.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(profile => profile.Weight).IsRequired();
-            builder.Property(profile => profile.Target).HasDefaultValue(0.0);
+            builder.Property(profile => profile.TargetWeight).HasDefaultValue(0.0);
+            builder.Property(profile => profile.CurrentWeight).HasDefaultValue(0.0);
             builder.Property(profile => profile.Height).IsRequired();
             builder.Property(profile => profile.Age).IsRequired();
             builder.Property(profile => profile.Gender).IsRequired();
