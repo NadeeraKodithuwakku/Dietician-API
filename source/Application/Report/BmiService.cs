@@ -29,9 +29,9 @@ namespace Dietician.Application.Report
                 BmiModel model = new BmiModel()
                 {
                     UserId = profie.UserId,
-                    Weight = profie.Weight,
+                    Weight = profie.CurrentWeight,
                     Height = profie.Height,
-                    BmiValue = (decimal)((double)profie.Weight / Math.Pow((double)(profie.Height / 100), 2))
+                    BmiValue = (decimal)((double)profie.CurrentWeight / Math.Pow((double)(profie.Height / 100), 2))
                 };
 
                 result.Add(model);
