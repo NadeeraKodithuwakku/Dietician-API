@@ -32,6 +32,7 @@ namespace Dietician.Database
             return Queryable.Where(ProgressExpression.UserId(id)).Select(ProgressExpression.Model).ToListAsync();
         }
 
+
         public Task UpdateWeightAsync(Progress progress)
         {
             return UpdatePartialAsync(progress.Id, new { progress.Weight, progress.DateModified });

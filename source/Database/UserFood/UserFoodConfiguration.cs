@@ -17,6 +17,7 @@ namespace Dietician.Database
             builder.Property(food => food.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(food => food.UserId).IsRequired();
             builder.Property(food => food.FoodId).IsRequired();
+            builder.Property(food => food.Date).IsRequired();
 
             builder.HasOne(food => food.User);
             builder.HasOne(food => food.Food);

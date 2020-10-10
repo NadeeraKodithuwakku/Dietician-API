@@ -11,12 +11,21 @@ namespace Dietician.Application.Report
 {
     public class ReportService : IReportService
     {
+        private readonly IFoodRepository foodRepository;
+        private readonly IUserFoodRepository ratingRepository;
         private readonly IProgressRepository progressRepository;
         private readonly IProfileRepository profileRepository;
         private readonly IUserRepository userRepository;
 
-        public ReportService(IProgressRepository progressRepository, IProfileRepository profileRepository, IUserRepository userRepository)
+        public ReportService(
+            IFoodRepository foodRepository,
+            IUserFoodRepository ratingRepository,
+            IProgressRepository progressRepository,
+            IProfileRepository profileRepository,
+            IUserRepository userRepository)
         {
+            this.foodRepository = foodRepository;
+            this.ratingRepository = ratingRepository;
             this.progressRepository = progressRepository;
             this.profileRepository = profileRepository;
             this.userRepository = userRepository;
@@ -78,6 +87,95 @@ namespace Dietician.Application.Report
         public async Task<IEnumerable<TopGainLossModel>> GetTopLoosers(DateTime date, int count)
         {
             return await GetRange(date, count, false);
+        }
+
+        public async Task<IEnumerable<RatingModel>> GetFoodRating()
+        {
+            var result = new List<RatingModel>();
+            var foods = await foodRepository.ListAsync();
+            var rating = await ratingRepository.ListAsync();
+
+            foreach (var food in foods)
+            {
+                var model = new RatingModel
+                {
+                    FoodId = food.Id,
+                    Food = FoodFactory.CreateFood(food),
+                };
+
+                var foodRating = rating.Where(r => r.FoodId == food.Id).Sum(r => r.Rating);
+                model.Rating = foodRating;
+                result.Add(model);
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<RatingModel>> GetFoodRatingByUserId(long userId)
+        {
+            var result = new List<RatingModel>();
+            var foods = await foodRepository.ListAsync();
+            var rating = await ratingRepository.ListByUserIdAsync(userId);
+
+            foreach (var food in foods)
+            {
+                var model = new RatingModel
+                {
+                    Food = FoodFactory.CreateFood(food),
+                    UserId = userId
+                };
+
+                var foodRating = rating.Where(r => r.FoodId == food.Id).Sum(r => r.Rating);
+                model.Rating = foodRating;
+                result.Add(model);
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<RatingModel>> GetFoodRatingByDayOfWeek(int dayOfWeek)
+        {
+            var result = new List<RatingModel>();
+            var foods = await foodRepository.ListAsync();
+            var rating = await ratingRepository.ListByDayAsync(dayOfWeek);
+
+            foreach (var food in foods)
+            {
+                var model = new RatingModel
+                {
+                    FoodId = food.Id,
+                    Food = FoodFactory.CreateFood(food)
+                };
+
+                var foodRating = rating.Where(r => r.FoodId == food.Id).Sum(r => r.Rating);
+                model.Rating = foodRating;
+                result.Add(model);
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<RatingModel>> GetFoodRatingByUserAndDayOfWeek(long userId, int dayOfWeek)
+        {
+            var result = new List<RatingModel>();
+            var foods = await foodRepository.ListAsync();
+            var rating = await ratingRepository.ListByUserAndDayAsync(userId, dayOfWeek);
+
+            foreach (var food in foods)
+            {
+                var model = new RatingModel
+                {
+                    FoodId = food.Id,
+                    Food = FoodFactory.CreateFood(food),
+                    UserId = userId
+                };
+
+                var foodRating = rating.Where(r => r.FoodId == food.Id).Sum(r => r.Rating);
+                model.Rating = foodRating;
+                result.Add(model);
+            }
+
+            return result;
         }
 
         private async Task<IEnumerable<TopGainLossModel>> GetRange(DateTime date, int count, bool isGainers)

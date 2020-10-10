@@ -44,5 +44,29 @@ namespace Dietician.Web.Controllers
         {
             return _reportService.GetTopLoosers(date, count).ResultAsync();
         }
+
+        [HttpGet("Rating/ByUserAndDay/{userId}/{day}")]
+        public Task<IActionResult> GetRatingByUserAndDay([FromRoute] long userId, [FromRoute] int day)
+        {
+            return _reportService.GetFoodRatingByUserAndDayOfWeek(userId, day).ResultAsync();
+        }
+
+        [HttpGet("Rating/ByUser/{userId}")]
+        public Task<IActionResult> GetRatingByUser([FromRoute] long userId)
+        {
+            return _reportService.GetFoodRatingByUserId(userId).ResultAsync();
+        }
+
+        [HttpGet("Rating/ByDay/{day}")]
+        public Task<IActionResult> GetRatingByDayOfWeek([FromRoute] int day)
+        {
+            return _reportService.GetFoodRatingByDayOfWeek(day).ResultAsync();
+        }
+
+        [HttpGet("Rating")]
+        public Task<IActionResult> GetRating()
+        {
+            return _reportService.GetFoodRating().ResultAsync();
+        }
     }
 }

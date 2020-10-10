@@ -22,7 +22,7 @@ namespace Dietician.Application
 
         public static UserFood CreateEntity(UserFoodModel userFood)
         {
-            return new UserFood(userFood.UserId, userFood.FoodId, userFood.Rating, userFood.Date)
+            return new UserFood(userFood.UserId, userFood.FoodId, userFood.Rating, userFood.Date, (int)userFood.Date.DayOfWeek)
             {
                 CreatedBy = "Admin",
                 ModifiedBy = "Admin",
