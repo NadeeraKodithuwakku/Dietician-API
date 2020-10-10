@@ -57,9 +57,11 @@ namespace Dietician.Application.Report
                             healthyCount++;
                         }
 
-                        result.Add(ReportFactory.CreatehealthCategoryDetailModel(underWeightCount, healthyCount, OverWeightCount, date));
                     }
                 }
+
+                result.Add(ReportFactory.CreatehealthCategoryDetailModel(underWeightCount, healthyCount, OverWeightCount, date));
+
             }
 
             return result;
