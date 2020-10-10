@@ -23,7 +23,14 @@ namespace Dietician.Database
             Goal = (int)profile.Goal,
             Pace = (int)profile.Pace,
             IsVeg = profile.IsVeg,
-            UserId = profile.UserId
+            UserId = profile.UserId,
+            User = new UserModel
+            {
+                Email = profile.User.Email.Value,
+                Id = profile.User.Id,
+                Name = profile.User.FullName.Name,
+                Surname = profile.User.FullName.Surname
+            }
         };
 
         public static Expression<Func<Profile, bool>> Id(long id)

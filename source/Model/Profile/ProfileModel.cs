@@ -18,5 +18,7 @@ namespace Dietician.Model
         public int ActivityLevel { get; set; }
         public int Goal { get; set; }
         public int Pace { get; set; }
+
+        public UserModel User { get; set; }
     }
 }
