@@ -27,7 +27,8 @@ namespace Dietician.Application
                 ActivityLevel = (ActivityLevel)profile.ActivityLevel,
                 Goal = (Goal)profile.Goal,
                 Pace = (Pace)profile.Pace,
-                CurrentWeight = profile.Weight
+                CurrentWeight = profile.Weight,
+                TargetWeight = profile.TargetWeight
             };
 
             return result;
